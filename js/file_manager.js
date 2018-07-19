@@ -90,7 +90,13 @@ function addProject(userId, projectName, responseHandler) {
     formData.append("func", "createProject");
     formData.append("userId", userId);
     formData.append("projectName", projectName);
-
+	var apps = [];
+	$('.window').each(function(){
+		apps.push($(this));
+	});
+	console.log(apps.length);
+	console.log(apps);
+	return;
     if (responseHandler == undefined)
         responseHandler = handleAddProjectResponse;
 
