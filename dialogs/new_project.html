@@ -17,7 +17,7 @@
 		var prjName = $("#txtPrjName").val();
 		var userId = window.sessionStorage.getItem("userId");
 		var newPrjId = window.sessionStorage.getItem("projectId");
-		
+		console.log('a');
 		addProject(userId, prjName);
 		
 		if(newPrjId==undefined || newPrjId==-1 || newPrjId==null) {
