@@ -90,13 +90,15 @@ function addProject(userId, projectName, responseHandler) {
     formData.append("func", "createProject");
     formData.append("userId", userId);
     formData.append("projectName", projectName);
+	
+	//Store all open applications in array
 	var apps = [];
 	$('.window').each(function(){
 		apps.push($(this));
 	});
-	console.log(apps.length);
-	console.log(apps);
-	return;
+	
+	formData.append("applications", apps);
+	
     if (responseHandler == undefined)
         responseHandler = handleAddProjectResponse;
 
@@ -503,6 +505,7 @@ function handleGetUserProjectsResponse(php_script_response) {
     if (!checkJsonData(respObj))
         window.sessionStorage.setItem("errorStatus", "fail");
     else {
+		console.log(respObj);
         window.sessionStorage.setItem("userProjects", php_script_response);
         window.sessionStorage.setItem("errorStatus", "success");
     }
