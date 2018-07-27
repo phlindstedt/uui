@@ -935,6 +935,8 @@
 										<div class="cell pt-0 mt-0 mb-5">
 											<span class="text-shadow">Recent Projects</span>
 										</div>
+										<a class="text-shadow mr-5" href="#" onclick="LoadProjects();">Load</a>
+										<a class="text-shadow mr-5" href="#" onclick="SaveProjects();">Save</a>
 									</div>
 									<div class="row">
 										<div class="cell"id="tileProjects">	
@@ -973,6 +975,76 @@
 														curSelectedDiv.removeClass("bg-darkCobalt");
 													if(newSelectedDiv!=null && newSelectedDiv!=undefined)
 														newSelectedDiv.addClass("bg-darkCobalt");
+												}
+												
+												function LoadProjects() {
+													var curPrjId = window.sessionStorage.getItem("currentProjectId");
+													getProjectFiles(curPrjId);
+													var prjsObj = JSON.parse(window.sessionStorage.getItem("projectFiles"));
+													for (i=0; i<prjsObj.DATA.length; i++) {
+														if(prjsObj.DATA[i].TOOL_NAME != null) {
+															console.log( prjsObj.DATA[i]);
+															
+															
+															// read text from URL location
+															var request = new XMLHttpRequest();
+															request.open('GET', 'https://cs.uef.fi/~ec2l/uploads/f1c69e8f98f5507abc8ccf7447a369dbcb65ee33.', true);
+															request.send(null);
+															request.onreadystatechange = function () {
+																if (request.readyState === 4 && request.status === 200) {
+																	var type = request.getResponseHeader('Content-Type');
+																	if (type.indexOf("text") !== 1) {
+																		return request.responseText;
+																	}
+																}
+															}
+															//var file = new Blob('https://cs.uef.fi/~ec2l/uploads/f1c69e8f98f5507abc8ccf7447a369dbcb65ee33.', 'file');
+															//console.log(file);
+															//var file = new File('https://cs.uef.fi/~ec2l/uploads/'+prjsObj.DATA[i].FILE_PATH, prjsObj.DATA[i].TOOL_NAME, {type: 'text', lastModified: Date.now()});
+															//console.log(file);
+															
+														}
+													}
+														
+												}
+												function createFile(data, filename, type) {
+													var file = new Blob([data], {type: type});
+													var a = document.createElement("a"),
+													url = URL.createObjectURL(file);
+													a.href = url;
+												}
+												function SaveProjects() {
+													var curPrjId = window.sessionStorage.getItem("currentProjectId");
+													$('.window').each(function(){
+														var filename = curPrjId+'-'+$(this).attr('id');
+														var blob = new Blob($(this), {type: 'text'});
+														//var file = new File([blob], filename, {type: 'text', lastModified: Date.now()});
+														console.log(blob);
+														var toolId = getToolId($(this).find('.title').text());
+														console.log(toolId);
+														addFile(curPrjId, toolId, blob);
+													});
+												}
+												function getToolId(name)  {
+													switch(name) {
+														case 'General':
+															return 1;
+															break;
+														case 'eCraft Search':
+															return 2;
+															break;
+														case 'eCraft Idea':
+															return 3;
+															break;
+														case 'Trello':
+															return 4;
+															break;
+														case 'TinkerCad 3D Design':
+															return 5;
+															break;
+														default:
+															return 0;
+													}
 												}
 											</script>
 										</div>

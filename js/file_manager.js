@@ -45,21 +45,27 @@ function addFile(projectId, toolId, fileInputObject, responseHandler) {
     formData.append("func", "uploadFile");
     formData.append("toolId", toolId);
     formData.append("projectId", projectId);
-
-    if (fileInputObject == null || fileInputObject == undefined
+	if(fileInputObject.size == 0 || fileInputObject.size == null) {
+		window.sessionStorage.setItem("errorStatus", "fail");
+		console.log('fail');
+        return;
+	}
+    /*if (fileInputObject == null || fileInputObject == undefined
         || $(fileInputObject) == null || $(fileInputObject) == undefined
         || $(fileInputObject).prop('files') == null || $(fileInputObject).prop('files') == undefined) {
         window.sessionStorage.setItem("errorStatus", "fail");
         return;
-    }
-    var file_data = $(fileInputObject).prop('files')[0];
+    }*/
+	var file_data = fileInputObject;
+    //var file_data = $(fileInputObject).prop('files')[0];
+	console.log(file_data);
     formData.append('file', file_data);
-
+	
     if (file_data == null || file_data == undefined) {
         window.sessionStorage.setItem("errorStatus", "fail");
         return;
     }
-
+	
     if (responseHandler == undefined)
         responseHandler = handleAddFileResponse;
 
@@ -167,6 +173,9 @@ function getProjectFiles(projectId, responseHandler) {
         responseHandler = handleGetProjectFilesResponse;
 
     makeAjaxCall(formData, responseHandler);
+	for(var key of formData.keys()) {
+		console.log(key);
+	}
 }
 
 /*  Function: getUserFiles
@@ -284,6 +293,7 @@ function selectUser(username, pilotsiteId, responseHandler) {
         <addFile>
 */
 function handleAddFileResponse(php_script_response) {
+	console.log(php_script_response);
     var respObj = JSON.parse(php_script_response);
 
     if (!checkJsonData(respObj))
@@ -411,7 +421,6 @@ function handleAddUserResponse(php_script_response) {
 */
 function handleGetProjectFilesResponse(php_script_response) {
     var respObj = JSON.parse(php_script_response);
-
     if (!checkJsonData(respObj))
         window.sessionStorage.setItem("errorStatus", "fail");
     else {
