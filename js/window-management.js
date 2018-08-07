@@ -154,7 +154,6 @@ function openIframeWindow(toolUrl, toolName, event) {
 	activeWindow.data('winWidth', activeWindow.width());
 	activeWindow.data('winHeight', activeWindow.height());
 	activeWindow.find('.window-caption').css("background-color", bgColor);
-	
 	return activeWindow;
 }
 //Given a url and a title for the window, this function creates a window (uses Metro UI dialog classes) and opens the url as an iframe in it. (no minimize, close, tray)
