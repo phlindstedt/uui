@@ -297,13 +297,12 @@ function handleAddFileResponse(php_script_response) {
 */
 function handleAddProjectResponse(php_script_response) {
     var respObj = JSON.parse(php_script_response);
-
     if (!checkJsonData(respObj)) {
         //window.sessionStorage.setItem("projectId", -1);
         window.sessionStorage.setItem("errorStatus", "fail");
     }
     else {
-        var projectId = parseInt(respObj.DATA[0].ID);
+        var projectId = parseInt(respObj.DATA['ID']);
         window.sessionStorage.setItem("projectId", projectId);
         window.sessionStorage.setItem("errorStatus", "success");
     }
@@ -567,8 +566,8 @@ function checkJsonData(jsonData) {
         return false;
     if (jsonData.DATA == null || jsonData.DATA == undefined)
         return false;
-    if (jsonData.DATA[0] == null || jsonData.DATA[0] == undefined)
-        return false;
+    /*if (jsonData.DATA[0] == null || jsonData.DATA[0] == undefined)
+        return false;*/
 
     return true;
 }
