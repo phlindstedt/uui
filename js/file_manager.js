@@ -544,7 +544,7 @@ function ping(handler){
 
 function makeAjaxCall(formData, handler) {
     $.ajax({
-        url: 'http://misuz.se/eCraft2Learn/index.php',
+        url: 'https://misuz.se/eCraft2Learn/index.php',
         //url: 'http://localhost/fileman/fileman_basic.php',
         dataType: 'text',
         cache: false,
