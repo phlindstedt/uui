@@ -557,6 +557,7 @@ function makeAjaxCall(formData, handler) {
         //    $('#result').append(php_script_response + "<br/>");
         //}
         success: function (php_script_response) {
+			console.log(php_script_response);
             handler(php_script_response);
         }
     });
