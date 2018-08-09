@@ -302,6 +302,7 @@ function handleAddProjectResponse(php_script_response) {
         window.sessionStorage.setItem("errorStatus", "fail");
     }
     else {
+		console.log(respObj.DATA);
         var projectId = parseInt(respObj.DATA['ID']);
         window.sessionStorage.setItem("projectId", projectId);
         window.sessionStorage.setItem("errorStatus", "success");
@@ -543,7 +544,7 @@ function ping(handler){
 
 function makeAjaxCall(formData, handler) {
     $.ajax({
-        url: 'https://cs.uef.fi/~ec2l/fileman.php',
+        url: 'http://misuz.se/eCraft2Learn/index.php',
         //url: 'http://localhost/fileman/fileman_basic.php',
         dataType: 'text',
         cache: false,
@@ -562,6 +563,7 @@ function makeAjaxCall(formData, handler) {
 }
 
 function checkJsonData(jsonData) {
+	console.log(jsonData);
     if (jsonData == null || jsonData == undefined)
         return false;
     if (jsonData.DATA == null || jsonData.DATA == undefined)
