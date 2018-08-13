@@ -36,7 +36,8 @@
 					if($('#file_name').val().length > 0) {
 						designer.getPoints(function(array){
 							var data = JSON.stringify(array);
-							saveDataToCloud(data, $('#file_name').val(), 'eCraft Plan');
+							var name = $('#file_name').val();
+							saveDataToCloud(data, name, 'eCraft Plan');
 						});
 					}
 				}
@@ -92,7 +93,8 @@
 			$(document).on('click', '#save', function(){
 				//var toolName = window.parent.$('.window').find('.title').text().trim();
 				var toolName = 'eCraft Plan';
-				openDialog(toolName, '.eidea');
+				var html = openDialog(toolName, '.eidea');
+				createMDialog(html);
 			});
 		</script>
 	</body>
