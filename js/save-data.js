@@ -51,8 +51,10 @@ function openDialog(toolName, ext) {
 			'</div>'+
 		'</div>'+
 	'</form>'
-	;
-
+	;	
+	return html;
+}
+function createMDialog(html){
 	Metro.infobox.create(html);
 	$('.info-box').last().css('top', '10%');
 	$('.local').hide();
@@ -64,6 +66,9 @@ function toolNameToId(toolName) {
 			break;
 		case 'eCraft Plan':
 			return 3;
+			break;
+		case 'snap!':
+			return 10;
 			break;
 		case 'eCraft Todo':
 			return 20;
@@ -108,6 +113,12 @@ function getAllCloudFiles(toolId) {
 	html += '</ul></li>';
 	return html;
 }
+function getAllCloudFilesJSON(toolId) {
+	getUserFiles(window.sessionStorage.getItem('userId'));
+	files = window.sessionStorage.getItem('userFiles');
+	arr = JSON.parse(files);
+	return arr;
+}
 function getCloudFiles(toolId){
 	//Project files
 	var html = '';
@@ -126,6 +137,8 @@ function saveDataToCloud(data, name, toolName) {
 	formData.append('users', window.sessionStorage.getItem('username'));
 	formData.append('sessionId', window.sessionStorage.getItem('pilotsite'));
 	formData.append('name', name);
+	formData.append("toolId", toolId);
+	formData.append('projectId', window.sessionStorage.getItem("currentProjectId"));
 	addFile(window.sessionStorage.getItem("currentProjectId"), toolId, formData);
 }
 function saveDataToLocal(data, name, toolName, ext) {

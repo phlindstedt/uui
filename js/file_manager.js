@@ -46,11 +46,12 @@ function addFile(projectId, toolId, fileInputObject, responseHandler) {
     formData.append("func", "uploadFile");
     formData.append("toolId", toolId);
     formData.append("projectId", projectId);
-
+	formData.append("data", fileInputObject);
+	
     if (responseHandler == undefined)
         responseHandler = handleAddFileResponse;
-
-    makeAjaxCall(formData, responseHandler);
+	
+    makeAjaxCall(fileInputObject, responseHandler);
 }
 
 /*  Function: addProject
@@ -268,7 +269,7 @@ function handleAddFileResponse(php_script_response) {
     if (!checkJsonData(respObj))
         window.sessionStorage.setItem("errorStatus", "fail");
     else {
-        var fileId = parseInt(respObj.DATA[0].ID);
+        var fileId = parseInt(respObj.DATA.ID);
         window.sessionStorage.setItem("uploadedFileId", fileId);
         window.sessionStorage.setItem("errorStatus", "success");
     }
@@ -302,7 +303,6 @@ function handleAddProjectResponse(php_script_response) {
         window.sessionStorage.setItem("errorStatus", "fail");
     }
     else {
-		console.log(respObj.DATA);
         var projectId = parseInt(respObj.DATA['ID']);
         window.sessionStorage.setItem("projectId", projectId);
         window.sessionStorage.setItem("errorStatus", "success");
@@ -564,7 +564,6 @@ function makeAjaxCall(formData, handler) {
 }
 
 function checkJsonData(jsonData) {
-	console.log(jsonData);
     if (jsonData == null || jsonData == undefined)
         return false;
     if (jsonData.DATA == null || jsonData.DATA == undefined)
