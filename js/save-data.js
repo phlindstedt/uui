@@ -83,6 +83,9 @@ function toolNameToId(toolName) {
 		case 'snap!':
 			return 10;
 			break;
+		case 'snap4Arduino':
+			return 11;
+			break;
 		case 'eCraft Todo':
 			return 20;
 			break;
@@ -126,9 +129,16 @@ function getAllCloudFiles(toolId) {
 	html += '</ul></li>';
 	return html;
 }
-function getAllCloudFilesJSON(toolId) {
+function getAllCloudFilesJSON() {
+	console.log('getAllCloudFilesJSON');
 	getUserFiles(window.sessionStorage.getItem('userId'));
 	files = window.sessionStorage.getItem('userFiles');
+	arr = JSON.parse(files);
+	return arr;
+}
+function getAllProjectFilesJSON() {
+	getProjectFiles(window.sessionStorage.getItem('currentProjectId'));
+	files = window.sessionStorage.getItem('projectFiles');
 	arr = JSON.parse(files);
 	return arr;
 }
@@ -144,6 +154,7 @@ function getCloudFiles(toolId){
 }
 function saveDataToCloud(data, name, toolName) {
 	var toolId = toolNameToId(toolName);
+	var projId = (window.sessionStorage.getItem("currentProjectId") || 1);
 	var formData = new FormData();
 	formData.append('func', 'uploadFile');
 	formData.append('data', data);
@@ -151,8 +162,8 @@ function saveDataToCloud(data, name, toolName) {
 	formData.append('sessionId', window.sessionStorage.getItem('pilotsite'));
 	formData.append('name', name);
 	formData.append("toolId", toolId);
-	formData.append('projectId', window.sessionStorage.getItem("currentProjectId"));
-	addFile(window.sessionStorage.getItem("currentProjectId"), toolId, formData);
+	formData.append('projectId', projId);
+	addFile(projId, toolId, formData);
 }
 function saveDataToLocal(data, name, toolName, ext) {
 	var a = document.createElement('a');
