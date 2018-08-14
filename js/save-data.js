@@ -95,7 +95,7 @@ function toolNameToId(toolName) {
 	}
 }
 function getProjectCloudFiles(toolId) {
-	var projId = window.sessionStorage.getItem('currentProjectId');
+	var projId = (window.sessionStorage.getItem('currentProjectId') || 1);
 	getProjectFiles(projId);
 	files = window.sessionStorage.getItem('projectFiles');
 	if(window.sessionStorage.getItem('projectFiles') == null)
