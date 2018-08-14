@@ -63,6 +63,7 @@ function openDialog(toolName, ext) {
 		box.css('max-width', window.innerWidth);
 	} else {
 		Metro.infobox.create(html);
+		box = $('.info-box').last();
 	}	
 	if(window.innerHeight < 550){
 		box.css('max-height', window.innerHeight);
