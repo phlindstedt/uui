@@ -137,7 +137,8 @@ function getAllCloudFilesJSON() {
 	return arr;
 }
 function getAllProjectFilesJSON() {
-	getProjectFiles(window.sessionStorage.getItem('currentProjectId'));
+	var projId = (window.sessionStorage.getItem('currentProjectId') || 1);
+	getProjectFiles(projId);
 	files = window.sessionStorage.getItem('projectFiles');
 	arr = JSON.parse(files);
 	return arr;
