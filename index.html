@@ -406,18 +406,20 @@
 				}
 			});
 		});
-		$(document).on('mousedown touchstart', '.window-caption', function(e)
+		$(document).on('mousedown touchstart touchmove', '.window-caption, .design-surface', function(e)
 		{
 			if(window.innerWidth < 640) {
 				$('body').removeClass('scroll');
 				$('body').addClass('no-scroll');
+				$('body').css('overscroll-behavior', 'none');
 			}
 		});
-		$(document).on('mouseup touchend', '.window-caption', function()
+		$(document).on('mouseup touchend', '.window-caption, .design-surface', function()
 		{
 			if(window.innerWidth < 640) {
 				$('body').removeClass('no-scroll');
 				$('body').addClass('scroll');
+				$('body').css('overscroll-behavior', 'auto');
 			}
 		});
 		$(document).on('click', '.btn-max', function(){

@@ -17,6 +17,14 @@
 			.panel-x {
 				width: 100% !important;
 			}
+			.no-scroll {
+				overflow: hidden;
+				overscroll-behavior: contain;
+			}
+			.scroll {
+				overflow: auto;
+				overscroll-behavior: auto;
+			}
 		</style>
 		<script>
 			$(document).on('click', '#load_file', function(){
