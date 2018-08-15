@@ -22,10 +22,25 @@
 <!-- Sentry will report bugs to us -->
 <!--     <script src="https://cdn.ravenjs.com/3.22.1/raven.min.js" crossorigin="anonymous"></script> -->
     <script>
+	$(document).on('mouseout', '#bottomCharm', function(){
+		if($('#bottomCharm button').length == 0) {
+			$(this).data('charms').close();
+		}
+	});
 	$(document).ready(function(){
 		$('.project.bg-darkCobalt').removeClass('bg-darkCobalt');
 		window.sessionStorage.setItem("currentProjectId", 1);
 		$('#activeProj').text('none');
+		if($(window).width() < 420)
+			$('#bottomCharm').hide();
+	});
+	$(window).scroll(function(event){
+		if($(window).width() > 420)
+			return;
+		if($('#bottomCharm button').length == 0)
+			$('#bottomCharm').hide();
+		else 
+			$('#bottomCharm').show();
 	});
     if (navigator.onLine) {
     	// if offline no need to even try to load sentry
