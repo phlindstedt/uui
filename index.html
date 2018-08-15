@@ -18,12 +18,14 @@
 	<link href="libraries/css/metro-icons.css" rel="stylesheet">-->
 	<link rel="stylesheet" href="libraries/css/metro-all.css">
     <script src="libraries/js/metro.js"></script>
-
+	<script src="js/save-data.js"></script>
 <!-- Sentry will report bugs to us -->
 <!--     <script src="https://cdn.ravenjs.com/3.22.1/raven.min.js" crossorigin="anonymous"></script> -->
     <script>
 	$(document).ready(function(){
-
+		$('.project.bg-darkCobalt').removeClass('bg-darkCobalt');
+		window.sessionStorage.setItem("currentProjectId", 1);
+		$('#activeProj').text('none');
 	});
     if (navigator.onLine) {
     	// if offline no need to even try to load sentry
@@ -614,7 +616,12 @@
 						</div>
 						<div class="row">
 							<div class="cell">
-								<div class="progress pull-right mr-2" data-role="progress" data-small="true" data-value="getUserProgress();" style="width:60%;"></div>
+								<div class="progress pull-right mr-2 mt-1 mb-1" data-role="progress" data-small="true" data-value="getUserProgress();" style="width:80%;"></div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="cell mt-0 pt-0" style="font-size: 0.8em;">
+								<div class="place-right mr-2 fg-darkBlue">Selected project: <span id="activeProj"></span></div>
 							</div>
 						</div>
 						<script>
@@ -970,7 +977,10 @@
 													var clickedLink = $(event.srcElement);
 													var prjId = clickedLink.data("PROJECTID");
 													window.sessionStorage.setItem("currentProjectId",prjId);
-
+													if(prjId > 0)
+														$('#activeProj').text(clickedLink.text());
+													else 
+														$('#activeProj').text('none');
 													var newSelectedDiv = $("#spanPrj_" + prjId);
 
 													if(curSelectedDiv!=null)
