@@ -42,16 +42,19 @@
         <handleAddFileResponse>
 */
 function addFile(projectId, toolId, fileInputObject, responseHandler) {
+	var name = fileInputObject.get('name');
+	var data = JSON.stringify(fileInputObject);
     var formData = new FormData();
     formData.append("func", "uploadFile");
     formData.append("toolId", toolId);
     formData.append("projectId", projectId);
-	formData.append("data", fileInputObject);
-	
+	formData.append("name", fileInputObject.get('name'));
+	formData.append("data", fileInputObject.get('data'));
+
     if (responseHandler == undefined)
         responseHandler = handleAddFileResponse;
 	
-    makeAjaxCall(fileInputObject, responseHandler);
+    makeAjaxCall(formData, responseHandler);
 }
 
 function removeFile(fileId, responseHandler) {
@@ -626,6 +629,7 @@ function makeAjaxCall(formData, handler) {
         //    $('#result').append(php_script_response + "<br/>");
         //}
         success: function (php_script_response) {
+			console.log(php_script_response);
             handler(php_script_response);
         }
     });

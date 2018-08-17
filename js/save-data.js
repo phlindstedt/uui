@@ -81,11 +81,53 @@ function toolNameToId(toolName) {
 		case 'eCraft Plan':
 			return 3;
 			break;
+		case 'Trello':
+			return 4;
+			break;
+		case 'TinkerCad 3D Design':
+			return 5;
+			break;
+		case 'TinkerCad Circuits':
+			return 6;
+			break;
+		case 'Beetle Blocks':
+			return 7;
+			break;
+		case '3D Slash':
+			return 8;
+			break;
+		case 'Cura':
+			return 9;
+			break;
 		case 'snap!':
 			return 10;
 			break;
 		case 'snap4Arduino':
 			return 11;
+			break;
+		case 'Ardublock':
+			return 12;
+			break;
+		case 'Scratch for RPi':
+			return 13;
+			break;
+		case 'Scratch for Arduino':
+			return 14;
+			break;
+		case 'App Inventor':
+			return 15;
+			break;
+		case 'Pocket Code':
+			return 16;
+			break;
+		case 'NetsBlox':
+			return 17;
+			break;
+		case 'Arduino IDE':
+			return 18;
+			break;
+		case 'Thingiverse':
+			return 19;
 			break;
 		case 'eCraft Todo':
 			return 20;
@@ -158,13 +200,13 @@ function saveDataToCloud(data, name, toolName) {
 	var toolId = toolNameToId(toolName);
 	var projId = (window.sessionStorage.getItem("currentProjectId") || 1);
 	var formData = new FormData();
-	formData.append('func', 'uploadFile');
+	//formData.append('func', 'uploadFile');
 	formData.append('data', data);
-	formData.append('users', window.sessionStorage.getItem('username'));
-	formData.append('sessionId', window.sessionStorage.getItem('pilotsite'));
+	//formData.append('users', window.sessionStorage.getItem('username'));
+	//formData.append('sessionId', window.sessionStorage.getItem('pilotsite'));
 	formData.append('name', name);
-	formData.append("toolId", toolId);
-	formData.append('projectId', projId);
+	//formData.append("toolId", toolId);
+	//formData.append('projectId', projId);
 	addFile(projId, toolId, formData);
 }
 function saveDataToLocal(data, name, toolName, ext) {
