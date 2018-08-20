@@ -372,6 +372,18 @@
 	</script>
 	
 	<script>
+		window.addEventListener('message', function (e) {
+			console.log(e.data);
+			if(e.data === 'drawing') {
+				$('body').css('overflow', 'hidden');
+				$('html').css('overflow', 'hidden');
+				$('body').css('overscroll-behavior', 'none');
+			} else if(e.data === 'stopdrawing') {
+				$('body').css('overflow', 'auto');
+				$('html').css('overflow', 'auto');
+				$('body').css('overscroll-behavior', 'auto');
+			}
+		});
 		$(document).on('click', '#hidden_apps', function(){
 			if($(this).is(':checked')) {
 				$('.no-mobile').each(function(){
@@ -406,7 +418,7 @@
 				}
 			});
 		});
-		$(document).on('mousedown touchstart touchmove', '.window-caption, .design-surface', function(e)
+		$(document).on('mousedown touchstart touchmove', '.window-caption', function(e)
 		{
 			if(window.innerWidth < 640) {
 				$('body').removeClass('scroll');
@@ -414,7 +426,7 @@
 				$('body').css('overscroll-behavior', 'none');
 			}
 		});
-		$(document).on('mouseup touchend', '.window-caption, .design-surface', function()
+		$(document).on('mouseup touchend', '.window-caption', function()
 		{
 			if(window.innerWidth < 640) {
 				$('body').removeClass('no-scroll');

@@ -17,14 +17,6 @@
 			.panel-x {
 				width: 100% !important;
 			}
-			.no-scroll {
-				overflow: hidden;
-				overscroll-behavior: contain;
-			}
-			.scroll {
-				overflow: auto;
-				overscroll-behavior: auto;
-			}
 		</style>
 		<script>
 			$(document).on('click', '#load_file', function(){
@@ -86,6 +78,16 @@
 					return;
 				};
 				reader.readAsText(file);
+			});
+			window.addEventListener('message', function (e) {
+				if(e.data === 'drawing') {
+					$('body').css('overflow', 'hidden');
+					window.parent.postMessage(e.data, "*");
+				} else if(e.data === 'stopdrawing') {
+					$('body').css('overflow', 'auto');
+					window.parent.postMessage(e.data, "*");
+				}
+					
 			});
 			/*$(document).ready(function(){
 			var img = new Image();

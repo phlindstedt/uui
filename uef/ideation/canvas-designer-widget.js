@@ -22,7 +22,6 @@ function CanvasDesigner() {
 
     function syncData(data) {
         if (!designer.iframe) return;
-
         designer.postMessage({
             canvasDesignerSyncData: data
         });
