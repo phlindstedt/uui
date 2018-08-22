@@ -644,13 +644,13 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="cell">
-								<div class="progress pull-right mr-2 mt-1 mb-1" data-role="progress" data-small="true" data-value="getUserProgress();" style="width:80%;"></div>
+							<div class="cell mt-0 pt-0" style="font-size: 0.8em;">
+								<div class="place-right mr-2 fg-darkBlue" style="margin-top: -0.5em;">Project: <span id="activeProj"></span></div>
 							</div>
 						</div>
 						<div class="row">
-							<div class="cell mt-0 pt-0" style="font-size: 0.8em;">
-								<div class="place-right mr-2 fg-darkBlue">Selected project: <span id="activeProj"></span></div>
+							<div class="cell">
+								<div class="progress pull-right mr-2 mt-1 mb-1" data-role="progress" data-small="true" data-value="getUserProgress();" style="width:80%;"></div>
 							</div>
 						</div>
 						<script>
@@ -1305,70 +1305,4 @@
 	<!-- The Task Bar at the bottom of the page-->
 	<div id="charmCatcher" style="height:20px; position:fixed; bottom:0%; width:100%; opacity:0; background-color:red; z-index:0;" onmouseenter="Metro.charms.open('#bottomCharm');"></div>
 	<div id="bottomCharm" data-role="charms" data-position="bottom"  class="bg-darkBlue"><span>&nbsp;</span></div>
-	
-	<script>
-
-	(() => {
-
-		setInterval(() => {
-
-			var user = window.sessionStorage.getItem('username');
-			var sessionId = window.sessionStorage.getItem('pilotsite');
-
-			var lastId = window.localStorage.getItem('lastMessageId');
-
-			if (! lastId)
-				lastId = 0;
-
-			if (user && sessionId) {
-
-				$.ajax({
-
-					type: 'POST',
-					url: 'https://cs.uef.fi/~tapanit/ecraft2learn/api/pilot_2/get_student_messages.php',
-					data: 'user=' + user + '&sessionId=' + sessionId + '&lastId=' + lastId,
-					success: (data) => {
-						
-						try {
-
-							var messages = JSON.parse(data);
-						
-						} catch (e) {
-						
-							return;
-							
-						}
-							
-						if (Array.isArray(messages)) {
-
-							var id = lastId;
-							
-							for (let i = 0; i < messages.length; i++) {
-							
-								id = messages[i].id;
-								
-								alert(messages[i].message);
-								
-											    
-							}
-							
-							id++;
-							
-							window.localStorage.setItem('lastMessageId', id);
-
-						}
-
-					},
-					error: (error) => { }
-
-				});
-
-			}
-
-		}, 2000);
-
-	})();
-		
-	</script>
-	
 </body>
