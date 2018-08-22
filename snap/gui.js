@@ -6429,7 +6429,6 @@ ProjectDialogMorph.prototype.recoveryDialog = function () {
 };
 
 ProjectDialogMorph.prototype.openProject = function () {
-	console.log('a');
     var proj = this.listField.selected,
         src;
     if (!proj) {return; }
@@ -6448,9 +6447,6 @@ ProjectDialogMorph.prototype.openProject = function () {
 };
 
 ProjectDialogMorph.prototype.openCloudProject = function (project, delta) {
-	console.log('project: '+project);
-	console.log('delta: '+delta);
-	return;
     var myself = this;
     myself.ide.nextSteps([
         function () {
