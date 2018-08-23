@@ -1,3 +1,5 @@
+console.log(ide);
+
 function increaseCounter() {
 
      var counter = 0;
@@ -44,6 +46,8 @@ setInterval(function() {
 
 	http.onreadystatechange = function() {
     
+    		console.log(http.responseText);
+    
 	};
 
 	http.send(params);
@@ -74,6 +78,8 @@ setInterval(function() {
         http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
         http.onreadystatechange = function() {
+                    
+                console.log(http.responseText);
             
         };  
 
