@@ -411,7 +411,6 @@ IDE_Morph.prototype.openIn = function (world) {
             }
             applyFlags(myself.cloud.parseDict(location.hash.substr(5)));
         } else if (location.hash.substr(0, 9) === '#present:') {
-			console.log('2');
             this.shield = new Morph();
             this.shield.color = this.color;
             this.shield.setExtent(this.parent.extent());
@@ -453,7 +452,6 @@ IDE_Morph.prototype.openIn = function (world) {
                 this.cloudError()
             );
         } else if (location.hash.substr(0, 7) === '#cloud:') {
-			console.log('2');
             this.shield = new Morph();
             this.shield.alpha = 0;
             this.shield.setExtent(this.parent.extent());
@@ -494,7 +492,6 @@ IDE_Morph.prototype.openIn = function (world) {
                 this.cloudError()
             );
         } else if (location.hash.substr(0, 4) === '#dl:') {
-			console.log('2');
             myself.showMessage('Fetching project\nfrom the cloud...');
 
             // make sure to lowercase the username
@@ -606,7 +603,7 @@ IDE_Morph.prototype.createControlBar = function () {
         stageSizeButton,
         appModeButton,
         steppingButton,
-        //cloudButton,
+        cloudButton,
         x,
         colors = [
             this.groupColor,
@@ -882,7 +879,7 @@ IDE_Morph.prototype.createControlBar = function () {
     this.controlBar.settingsButton = settingsButton; // for menu positioning
 
     // cloudButton
-    /*button = new PushButtonMorph(
+    button = new PushButtonMorph(
         this,
         'cloudMenu',
         new SymbolMorph('cloud', 11)
@@ -903,7 +900,7 @@ IDE_Morph.prototype.createControlBar = function () {
     cloudButton = button;
     this.controlBar.add(cloudButton);
     this.controlBar.cloudButton = cloudButton; // for menu positioning
-	*/
+
     this.controlBar.fixLayout = function () {
         x = this.right() - padding;
         [stopButton, pauseButton, startButton].forEach(
@@ -938,12 +935,11 @@ IDE_Morph.prototype.createControlBar = function () {
         settingsButton.setCenter(myself.controlBar.center());
         settingsButton.setLeft(this.left());
 
-        //cloudButton.setCenter(myself.controlBar.center());
-        //cloudButton.setRight(settingsButton.left() - padding);
+        cloudButton.setCenter(myself.controlBar.center());
+        cloudButton.setRight(settingsButton.left() - padding);
 
         projectButton.setCenter(myself.controlBar.center());
-        //projectButton.setRight(cloudButton.left() - padding);
-		projectButton.setRight(settingsButton.left() - padding);
+        projectButton.setRight(cloudButton.left() - padding);
 
         this.refreshSlider();
         this.updateLabel();
@@ -2538,7 +2534,7 @@ IDE_Morph.prototype.snapMenu = function () {
     menu.popup(world, this.logo.bottomLeft());
 };
 
-/*IDE_Morph.prototype.cloudMenu = function () {
+IDE_Morph.prototype.cloudMenu = function () {
     var menu,
         myself = this,
         world = this.world(),
@@ -2673,7 +2669,7 @@ IDE_Morph.prototype.snapMenu = function () {
         );
     }
     menu.popup(world, pos);
-};*/
+};
 
 IDE_Morph.prototype.settingsMenu = function () {
     var menu,
@@ -4778,7 +4774,7 @@ IDE_Morph.prototype.toggleAppMode = function (appMode) {
     var world = this.world(),
         elements = [
             this.logo,
-            //this.controlBar.cloudButton,
+            this.controlBar.cloudButton,
             this.controlBar.projectButton,
             this.controlBar.settingsButton,
             this.controlBar.steppingButton,
@@ -5765,9 +5761,7 @@ ProjectDialogMorph.prototype.init = function (ide, task) {
 };
 
 ProjectDialogMorph.prototype.buildContents = function () {
-    var thumbnail, 
-	notification,
-	myself = this;
+    var thumbnail, notification;
 
     this.addBody(new Morph());
     this.body.color = this.color;
@@ -5791,8 +5785,6 @@ ProjectDialogMorph.prototype.buildContents = function () {
         this.srcBar.add(notification);
     }
 
-	this.addFilesCheckbox('showAllFiles', localize('Show all files'), this.showAllFiles);
-	
     this.addSourceButton('cloud', localize('Cloud'), 'cloud');
     this.addSourceButton('local', localize('Browser'), 'storage');
     if (this.task === 'open') {
@@ -5924,44 +5916,6 @@ ProjectDialogMorph.prototype.popUp = function (wrrld) {
         );
     }
 };
-
-ProjectDialogMorph.prototype.addFilesCheckbox = function (
-    source,
-    label,
-	value
-) {
-	var myself = this;
-	button = new ToggleMorph(
-        'checkbox',
-        myself,
-        function () {
-			myself.value = !myself.value;
-			
-			if(myself.value){
-				myself.setFiles('all');
-			} else {
-				myself.setFiles('project');
-			}
-        },
-        localize(label),
-        function () {
-            return myself.value;
-        }
-    );
-	button.corner = this.buttonCorner;
-	button.edge = this.buttonEdge / 2;
-    button.outline = this.buttonOutline / 2;
-    button.outlineColor = this.buttonOutlineColor;
-    button.outlineGradient = this.buttonOutlineGradient;
-	button.padding = this.buttonPadding;//
-    button.contrast = this.buttonContrast;
-
-    button.drawNew();
-    button.fixLayout();
-	button.refresh();//
-	
-    this.srcBar.add(button);
-}
 
 // ProjectDialogMorph source buttons
 
@@ -6104,51 +6058,6 @@ ProjectDialogMorph.prototype.buildFilterField = function () {
     };
 };
 
-ProjectDialogMorph.prototype.setFiles = function (val) {
-	var myself = this,
-        msg;
-	this.val = val;
-	switch (this.val) {
-		case 'all':
-			msg = myself.ide.showMessage('Updating\nproject list...');
-			this.projectList = [];
-			myself.ide.cloud.getProjectList(
-				'all',
-				function (response) {
-					// Don't show cloud projects if user has since switch panes.
-					if (myself.source === 'cloud') {
-						myself.installCloudProjectList(response.projects);
-					}
-					msg.destroy();
-				},
-				function (err, lbl) {
-					msg.destroy();
-					myself.ide.cloudError().call(null, err, lbl);
-				}
-			);
-			return;
-		case 'project':
-			msg = myself.ide.showMessage('Updating\nproject list...');
-			this.projectList = [];
-			myself.ide.cloud.getProjectList(
-				'project',
-				function (response) {
-					// Don't show cloud projects if user has since switch panes.
-					if (myself.source === 'cloud') {
-						myself.installCloudProjectList(response.projects);
-					}
-					msg.destroy();
-				},
-				function (err, lbl) {
-					msg.destroy();
-					myself.ide.cloudError().call(null, err, lbl);
-				}
-			);
-			return;
-	}
-};
-
-
 // ProjectDialogMorph ops
 
 ProjectDialogMorph.prototype.setSource = function (source) {
@@ -6164,7 +6073,6 @@ ProjectDialogMorph.prototype.setSource = function (source) {
         msg = myself.ide.showMessage('Updating\nproject list...');
         this.projectList = [];
         myself.ide.cloud.getProjectList(
-			'project',
             function (response) {
                 // Don't show cloud projects if user has since switch panes.
                 if (myself.source === 'cloud') {
@@ -6306,7 +6214,6 @@ ProjectDialogMorph.prototype.getExamplesProjectList = function () {
 };
 
 ProjectDialogMorph.prototype.installCloudProjectList = function (pl) {
-	
     var myself = this;
     this.projectList = pl[0] ? pl : [];
     this.projectList.sort(function (x, y) {
