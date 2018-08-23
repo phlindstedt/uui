@@ -3240,18 +3240,8 @@
 
     var canvas = tempContext.canvas,
         isTouch = 'createTouch' in document;
-	if(navigator.userAgent.match(/Android/i)
-	 || navigator.userAgent.match(/webOS/i)
-	 || navigator.userAgent.match(/iPhone/i)
-	 || navigator.userAgent.match(/iPad/i)
-	 || navigator.userAgent.match(/iPod/i)
-	 || navigator.userAgent.match(/BlackBerry/i)
-	 || navigator.userAgent.match(/Windows Phone/i)) {
-		isTouch = true;
-	}
-		
+
     addEvent(canvas, isTouch ? 'touchstart mousedown' : 'mousedown', function(e) {
-		window.parent.postMessage("drawing", "*");
         if (isTouch) e = e.pageX ? e : e.touches.length ? e.touches[0] : {
             pageX: 0,
             pageY: 0
@@ -3290,9 +3280,8 @@
             e.stopPropagation();
         }
     }
-	
+
     addEvent(canvas, isTouch ? 'touchend touchcancel mouseup' : 'mouseup', function(e) {
-		window.parent.postMessage("stopdrawing", "*");
         if (isTouch && (!e || !('pageX' in e))) {
             if (e && e.touches && e.touches.length) {
                 e = e.touches[0];
@@ -3329,7 +3318,6 @@
     });
 
     addEvent(canvas, isTouch ? 'touchmove mousemove' : 'mousemove', function(e) {
-		console.log('move');
         if (isTouch) e = e.pageX ? e : e.touches.length ? e.touches[0] : {
             pageX: 0,
             pageY: 0
