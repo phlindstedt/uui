@@ -617,7 +617,7 @@ IDE_Morph.prototype.createControlBar = function () {
             new SymbolMorph('normalStage', 14)
         ],
         function () {  // query
-            return myself.isSmallStage;
+            return !myself.isSmallStage;
         }
     );
 
@@ -652,7 +652,7 @@ IDE_Morph.prototype.createControlBar = function () {
             return myself.isAppMode;
         }
     );
-
+	
     button.corner = 12;
     button.color = colors[0];
     button.highlightColor = colors[1];
@@ -670,7 +670,7 @@ IDE_Morph.prototype.createControlBar = function () {
     appModeButton = button;
     this.controlBar.add(appModeButton);
     this.controlBar.appModeButton = appModeButton; // for refreshing
-
+	this.controlBar.appModeButton.refresh();
     //steppingButton
     button = new ToggleButtonMorph(
         null, //colors,
@@ -884,8 +884,9 @@ IDE_Morph.prototype.createControlBar = function () {
     this.controlBar.add(cloudButton);
     this.controlBar.cloudButton = cloudButton; // for menu positioning
 */
-    this.controlBar.fixLayout = function () {
-        x = this.right() - padding;
+    this.controlBar.fixLayout = function () {		
+        //x = this.right() - padding;
+		x = window.innerWidth - padding;
         [stopButton, pauseButton, startButton].forEach(
             function (button) {
                 button.setCenter(myself.controlBar.center());
@@ -898,7 +899,7 @@ IDE_Morph.prototype.createControlBar = function () {
         x = Math.min(
             startButton.left() - (3 * padding + 2 * stageSizeButton.width()),
             myself.right() - StageMorph.prototype.dimensions.x *
-                (myself.isSmallStage ? myself.stageRatio : 1)
+                (myself.isSmallStage ? myself.stageRatio : 0.6)
         );
         [stageSizeButton, appModeButton].forEach(
             function (button) {
@@ -914,9 +915,9 @@ IDE_Morph.prototype.createControlBar = function () {
 
         steppingButton.setCenter(myself.controlBar.center());
         steppingButton.setRight(slider.left() - padding);
-
+		
         settingsButton.setCenter(myself.controlBar.center());
-        settingsButton.setLeft(this.left());
+        settingsButton.setRight(this.left());
 
         //cloudButton.setCenter(myself.controlBar.center());
         //cloudButton.setRight(settingsButton.left() - padding);
@@ -1212,7 +1213,7 @@ IDE_Morph.prototype.createSpriteBar = function () {
     this.spriteBar = new Morph();
     this.spriteBar.color = this.frameColor;
     this.add(this.spriteBar);
-
+	
     function addRotationStyleButton(rotationStyle) {
         var colors = myself.rotationStyleColors,
             button;
@@ -1727,6 +1728,7 @@ IDE_Morph.prototype.fixLayout = function (situation) {
     this.palette.setWidth(this.paletteWidth);
 
     if (situation !== 'refreshPalette') {
+		this.palette.setWidth(this.paletteWidth);
         // stage
         if (this.isEmbedMode) {
             this.stage.setScale(Math.floor(Math.min(
@@ -1753,7 +1755,7 @@ IDE_Morph.prototype.fixLayout = function (situation) {
             ) * 10) / 10);
             this.stage.setCenter(this.center());
         } else {
-            this.stage.setScale(this.isSmallStage ? this.stageRatio : 1);
+			this.stage.setScale(this.isSmallStage ? this.stageRatio : 1);
             this.stage.setTop(this.logo.bottom() + padding);
             this.stage.setRight(this.right());
             maxPaletteWidth = Math.max(
