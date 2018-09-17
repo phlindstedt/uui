@@ -237,6 +237,7 @@ function saveDataToLocal(data, name, toolName, ext) {
 	a.download = name+ext;
 	a.click();
 	$('.info-box').data('infobox').close();
+	Metro.toast.create("Saving file.", null, null, "info");
 	a.remove();
 }
 $(document).on('click', 'button', function(e){
