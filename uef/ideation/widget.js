@@ -645,7 +645,6 @@
 
     var drawHelper = {
         redraw: function() {
-			return;
             tempContext.clearRect(0, 0, 4000, 4000);
             context.clearRect(0, 0, 4000, 4000);
 
@@ -3330,7 +3329,6 @@
     });
 
     addEvent(canvas, isTouch ? 'touchmove mousemove' : 'mousemove', function(e) {
-		console.log('move');
         if (isTouch) e = e.pageX ? e : e.touches.length ? e.touches[0] : {
             pageX: 0,
             pageY: 0

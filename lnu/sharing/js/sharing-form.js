@@ -113,7 +113,7 @@ function generateUploadButton(){
 function generateProjectSelect(labelText,callback) {
 
     getProjects(function (projects) {
-        if(projects.length>0){
+        //if(projects.length>0){
             var labelEl = document.createElement("label");
             labelEl.classList.add("block");
             labelEl.textContent = labelText;
@@ -148,7 +148,7 @@ function generateProjectSelect(labelText,callback) {
             divEl.appendChild(selectEl);
             $("#dynamicContent").append(labelEl).append(divEl);
             callback();
-        }
+        //}
     });
 
 }
@@ -247,7 +247,7 @@ function generateFileSelect(callback) {
 
 function generateHtmlProjectFile() {
 
-   //generate list of files
+    //generate list of files
     generateFileSelect(function () {
 
         //share button
@@ -284,4 +284,3 @@ function generateHtmlProjectFile() {
     });
 
 }
-
