@@ -74,7 +74,7 @@ function openDialog(toolName, ext) {
 	} else {
 		css += "top: 10% !important;";
 	}
-
+	css += 'overflow:auto;';
 	//box.css("cssText", css);
 
 	$('.local').hide();
