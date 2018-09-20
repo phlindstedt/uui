@@ -1,6 +1,6 @@
 /*  Function: addFile
-
-    Uploads a file to the server.
+   
+    Uploads a file to the server. 
 
     Parameters:
         projectId - ID of the project that this file belongs to (Type: Int)
@@ -10,34 +10,34 @@
                           will use the default response handler for addFile which is <handleAddFileResponse>.
 		data - The data from the application that will be saved. (Type: String)
     Returns:
-        This function does not return any value. It uses the <handleGetUserProjectsResponse> or responseHandler (the last parameter to this function) callback functions to parse the data received from the server.
+        This function does not return any value. It uses the <handleGetUserProjectsResponse> or responseHandler (the last parameter to this function) callback functions to parse the data received from the server. 
         If this function fails before making the AJAX call, then the *errorStatus* field in the *window.sessionStorage* is set to "fail".
 
     Remarks:
         Tool IDs are preset and are as follows:
 
-        |  1 | General
-        |  2 | eCraft Search
-        |  3 | eCraft Plan
-        |  4 | Trello
-        |  5 | TinkerCad 3D Design
-        |  6 | TinkerCad Circuits
-        |  7 | Beetle Blocks
-        |  8 | 3D Slash
-        |  9 | Cura
-        | 10 | Snap!
-        | 11 | Snap4Arduino
-        | 12 | Ardublock
-        | 13 | Scratch for RPi
-        | 14 | Scratch for Arduino
-        | 15 | App Inventor
-        | 16 | Pocket Code
-        | 17 | NetsBlox
-        | 18 | Arduino IDE
-        | 19 | Thingiverse
+        |  1 | General             
+        |  2 | eCraft Search       
+        |  3 | eCraft Plan         
+        |  4 | Trello              
+        |  5 | TinkerCad 3D Design 
+        |  6 | TinkerCad Circuits  
+        |  7 | Beetle Blocks       
+        |  8 | 3D Slash            
+        |  9 | Cura                
+        | 10 | Snap!               
+        | 11 | Snap4Arduino        
+        | 12 | Ardublock           
+        | 13 | Scratch for RPi     
+        | 14 | Scratch for Arduino 
+        | 15 | App Inventor        
+        | 16 | Pocket Code         
+        | 17 | NetsBlox            
+        | 18 | Arduino IDE         
+        | 19 | Thingiverse      
 		| 20 | eCraft TODO
 
-
+   
     See Also:
         <handleAddFileResponse>
 */
@@ -48,11 +48,11 @@ function addFile(projectId, toolId, fileInputObject, responseHandler) {
     formData.append("func", "uploadFile");
     formData.append("toolId", toolId);
     formData.append("projectId", projectId);
-
-
+	
+	
 	formData.append("name", name);
 	formData.append("data", data);
-
+	
 	//Data and name is only used for when using the save to cloud function in applications.
 	//If data is empty, the addFile function is used by Share my work.
 	if(fileInputObject.get('data') == null || fileInputObject.get('data') == '') {
@@ -62,10 +62,10 @@ function addFile(projectId, toolId, fileInputObject, responseHandler) {
 			window.sessionStorage.setItem("errorStatus", "fail");
 			return;
 		}
-
+		
 		var file_data = $(fileInputObject).prop('files')[0];
 		formData.append('file', file_data);
-
+		
 		if (file_data == null || file_data == undefined) {
 			window.sessionStorage.setItem("errorStatus", "fail");
 			return;
@@ -74,7 +74,7 @@ function addFile(projectId, toolId, fileInputObject, responseHandler) {
 
     if (responseHandler == undefined)
         responseHandler = handleAddFileResponse;
-
+	
     makeAjaxCall(formData, responseHandler);
 }
 
@@ -88,7 +88,7 @@ function removeFile(fileId, responseHandler) {
 }
 
 /*  Function: addProject
-
+   
     Adds a new project for the given user to the database.
 
     Parameters:
@@ -119,8 +119,8 @@ function addProject(userId, projectName, responseHandler) {
 }
 
 /*  Function: addUser
-
-    Adds a new user to the database through a synchronous AJAX call.
+   
+    Adds a new user to the database through a synchronous AJAX call. 
 
     Parameters:
         username - A string containing the username. (Type: String)
@@ -134,11 +134,11 @@ function addProject(userId, projectName, responseHandler) {
 
     Remarks:
         Currently the IDs for the sites (pilotsiteId parameter) are as follows:
-        | 10 | Not at a pilot site
-        | 11 | Pataluoto School
-        | 12 | Lyseo High School
-        | 13 | Athens informal pilot site
-        | 14 | Athens formal pilot site
+        | 10 | Not at a pilot site        
+        | 11 | Pataluoto School           
+        | 12 | Lyseo High School          
+        | 13 | Athens informal pilot site 
+        | 14 | Athens formal pilot site   
 
     See Also:
         <handleAddUserResponse>
@@ -157,8 +157,8 @@ function addUser(username, pilotsiteId, isGroup, responseHandler) {
 }
 
 /*  Function: getProjectFiles
-
-    Gets a list of all the files that belong to a specific project.
+   
+    Gets a list of all the files that belong to a specific project. 
 
     Parameters:
         projectId - ID of the project which its files should be returned (Type: Int)
@@ -166,7 +166,7 @@ function addUser(username, pilotsiteId, isGroup, responseHandler) {
                           will use the default response handler for getProjectFiles which is <handleGetProjectFilesResponse>.
 
     Returns:
-        This function does not return any value. It uses the <handleGetProjectFilesResponse> or responseHandler (the last parameter to this function) callback functions to parse the data received from the server.
+        This function does not return any value. It uses the <handleGetProjectFilesResponse> or responseHandler (the last parameter to this function) callback functions to parse the data received from the server. 
 
     See Also:
         <handleGetProjectFilesResponse>, <getUserFiles>
@@ -183,8 +183,8 @@ function getProjectFiles(projectId, responseHandler) {
 }
 
 /*  Function: getUserFiles
-
-    Gets a list of all the files that belong to a specific user.
+   
+    Gets a list of all the files that belong to a specific user. 
 
     Parameters:
         userId - ID of the user whose files should be returned (Type: Int)
@@ -192,7 +192,7 @@ function getProjectFiles(projectId, responseHandler) {
                           will use the default response handler for getUserFiles which is <handleGetUserFilesResponse>.
 
     Returns:
-        This function does not return any value. It uses the <handleGetUserFilesResponse> or responseHandler (the last parameter to this function) callback functions to parse the data received from the server.
+        This function does not return any value. It uses the <handleGetUserFilesResponse> or responseHandler (the last parameter to this function) callback functions to parse the data received from the server. 
 
     See Also:
         <handleGetUserFilesResponse>, <getProjectFiles>
@@ -209,7 +209,7 @@ function getUserFiles(userId, responseHandler) {
 }
 
 /*  Function: getUserProjects
-
+   
     Gets a list of all the projects that belong to a givem user.
 
     Parameters:
@@ -218,8 +218,8 @@ function getUserFiles(userId, responseHandler) {
                           will use the default response handler for getUserProjects which is <handleGetUserProjectsResponse>.
 
     Returns:
-        This function does not return any value. It uses the <handleGetUserProjectsResponse> or responseHandler (the last parameter to this function) callback functions to parse the data received from the server.
-
+        This function does not return any value. It uses the <handleGetUserProjectsResponse> or responseHandler (the last parameter to this function) callback functions to parse the data received from the server. 
+   
     See Also:
         <handleGetUserProjectsResponse>
 */
@@ -235,8 +235,8 @@ function getUserProjects(userId, responseHandler) {
 }
 
 /*  Function: selectUser
-
-    Sends a username and pilot site ID to the server and receives an ID, if such a user exists.
+   
+    Sends a username and pilot site ID to the server and receives an ID, if such a user exists. 
 
     Parameters:
         username - A string containing the username. (Type: String)
@@ -258,7 +258,7 @@ function selectUser(username, pilotsiteId, responseHandler) {
     formData.append("func", "selectUser");
     formData.append("username", username);
     formData.append("sessionId", pilotsiteId);
-
+	
     if (responseHandler == undefined)
         responseHandler = handleSelectUserResponse;
 
@@ -268,27 +268,27 @@ function selectUser(username, pilotsiteId, responseHandler) {
 //##################################################################################
 //##################################################################################
 //
-// R E S P O N S E   H A N D L E R S
+// R E S P O N S E   H A N D L E R S 
 //
 //##################################################################################
 //##################################################################################
 
 /*  Function: handleAddFileResponse
-
+   
     Handles the response from the AJAX call to the *<addFile>* function. You will not be directly making calls to this function unless you want to implement your own responseHandler which improves
-    the functionality of this function.
+    the functionality of this function. 
 
     Parameters:
         php_script_response - The response string received from AJAX call.
 
     Returns:
         This function does not return any value. It stores the results in the *window.sessionStorage* object.
-
+        
     Remarks:
         Upon success the *errorStatus* field in *window.sessionStorage* is set to *success* and the following are also set:
 
         - *uploadedFileId*: ID of the recently uploaded file.
-
+                
         If the call fails or the response is not parsable the *errorStatus* field in *window.sessionStorage* is set to *fail* and the following are also set:
 
         - *uploadedFileId*: this value will be set to -1.
@@ -311,27 +311,27 @@ function handleAddFileResponse(php_script_response) {
 //##################################################################################
 //##################################################################################
 //
-// R E S P O N S E   H A N D L E R S
+// R E S P O N S E   H A N D L E R S 
 //
 //##################################################################################
 //##################################################################################
 
 /*  Function: handleRemoveFileResponse
-
+   
     Handles the response from the AJAX call to the *<addFile>* function. You will not be directly making calls to this function unless you want to implement your own responseHandler which improves
-    the functionality of this function.
+    the functionality of this function. 
 
     Parameters:
         php_script_response - The response string received from AJAX call.
 
     Returns:
         This function does not return any value. It removes the file from the *window.sessionStorage* object.
-
+        
     Remarks:
         Upon success the *errorStatus* field in *window.sessionStorage* is set to *success* and the following are also set:
 
         - *projectFiles*: Updated list with the existing project files.
-
+                
         If the call fails or the response is not parsable the *errorStatus* field in *window.sessionStorage* is set to *fail* and the following are also set:
 
         - *userFiles*: Updated list with the existing user files.
@@ -341,7 +341,7 @@ function handleAddFileResponse(php_script_response) {
 */
 function handleRemoveFileResponse(php_script_response) {
     var respObj = JSON.parse(php_script_response);
-
+	
     if (!checkJsonData(respObj))
         window.sessionStorage.setItem("errorStatus", "fail");
     else {
@@ -354,7 +354,7 @@ function handleRemoveFileResponse(php_script_response) {
 			}
 		}
 		window.sessionStorage.setItem("userFiles", JSON.stringify(files));
-
+		
 		files = JSON.parse(window.sessionStorage.getItem("userFiles"));
 		for(var i = 0; i < files.length; ++i) {
 			if(files.DATA[i].ID == fileId) {
@@ -363,27 +363,27 @@ function handleRemoveFileResponse(php_script_response) {
 			}
 		}
 		window.sessionStorage.setItem("userFiles", JSON.stringify(files));
-
+		
         window.sessionStorage.setItem("errorStatus", "success");
     }
 }
 
 /*  Function: handleAddProjectResponse
-
+   
     Handles the response from the AJAX call to the *<addProject>* function. You will not be directly making calls to this function unless you want to implement your own responseHandler which improves
-    the functionality of this function.
+    the functionality of this function. 
 
     Parameters:
         php_script_response - The response string received from AJAX call.
 
     Returns:
         This function does not return any value. It stores the results in the *window.sessionStorage* object.
-
+        
     Remarks:
         Upon success the *errorStatus* field in *window.sessionStorage* is set to *success* and the following are also set:
 
         - *projectId*: int value representing the given ID to the new project.
-
+                
         If the call fails or the response is not parsable the *errorStatus* field in *window.sessionStorage* is set to *fail*.
 
     See Also:
@@ -403,23 +403,23 @@ function handleAddProjectResponse(php_script_response) {
 }
 
 /*  Function: handleAddUserResponse
-
+   
     Handles the response from the AJAX call to the *<addUser>* function. You will not be directly making calls to this function unless you want to implement your own responseHandler which improves
-    the functionality of this function.
+    the functionality of this function. 
 
     Parameters:
         php_script_response - The response string received from AJAX call.
 
     Returns:
         This function does not return any value. It stores the results in the *window.sessionStorage* object.
-
+        
     Remarks:
         Upon success the *errorStatus* field in *window.sessionStorage* is set to *success* and the following are also set:
 
         - *userId*: int value representing the user ID
         - *username*: string, the username
         - *pilotsite*: int, ID of the pilot site see <addUser>
-
+                
         If the call fails or the response is not parsable the *errorStatus* field in *window.sessionStorage* is set to *fail* and the following are also set:
 
         - *userId*: this will be set to -1
@@ -447,20 +447,20 @@ function handleAddUserResponse(php_script_response) {
 }
 
 /*  Function: handleGetProjectFilesResponse
-
+   
     Handles the response from the AJAX call to the *<getProjectFiles>* function. You will not be directly making calls to this function unless you want to implement your own responseHandler which improves
-    the functionality of this function.
+    the functionality of this function. 
 
     Parameters:
         php_script_response - The response string received from AJAX call.
 
     Returns:
         This function does not return any value. It stores the results in the *window.sessionStorage* object.
-
+        
     Remarks:
         Upon success the *errorStatus* field in *window.sessionStorage* is set to *success* and the following are also set:
 
-        - *projectFiles*: This is a JSON object that contains an array poplulated with a list of  files. The array is called DATA. For each file the following fields exist:
+        - *projectFiles*: This is a JSON object that contains an array poplulated with a list of  files. The array is called DATA. For each file the following fields exist: 
             - ID
             - PROJECTID
             - TOOLID
@@ -475,7 +475,7 @@ function handleAddUserResponse(php_script_response) {
         for (i=0; i<prjsObj.DATA.length; i++)
             alert( prjsObj.DATA[i].ID + ": " + prjsObj.DATA[i].TOOL_NAME);
         ---
-
+                
         If the call fails or the response is not parsable the *errorStatus* field in *window.sessionStorage* is set to *fail*.
 
     See Also:
@@ -494,20 +494,20 @@ function handleGetProjectFilesResponse(php_script_response) {
 }
 
 /*  Function: handleGetUserFilesResponse
-
+   
     Handles the response from the AJAX call to the *<getUserFiles>* function. You will not be directly making calls to this function unless you want to implement your own responseHandler which improves
-    the functionality of this function.
+    the functionality of this function. 
 
     Parameters:
         php_script_response - The response string received from AJAX call.
 
     Returns:
         This function does not return any value. It stores the results in the *window.sessionStorage* object.
-
+        
     Remarks:
         Upon success the *errorStatus* field in *window.sessionStorage* is set to *success* and the following are also set:
 
-        - *userFiles*: This is a JSON object that contains an array populated with a list of  files. The values are stored in an array called DATA. For each file the following fields exist:
+        - *userFiles*: This is a JSON object that contains an array populated with a list of  files. The values are stored in an array called DATA. For each file the following fields exist: 
             - ID
             - PROJECTID
             - TOOLID
@@ -524,7 +524,7 @@ function handleGetProjectFilesResponse(php_script_response) {
         for (i=0; i<prjsObj.DATA.length; i++)
             alert( prjsObj.DATA[i].ID + ": " + prjsObj.DATA[i].TOOL_NAME);
         ---
-
+                
         If the call fails or the response is not parsable the *errorStatus* field in *window.sessionStorage* is set to *fail*.
 
     See Also:
@@ -542,23 +542,23 @@ function handleGetUserFilesResponse(php_script_response) {
 }
 
 /*  Function: handleGetUserProjectsResponse
-
+   
     Handles the response from the AJAX call to the *<getUserProjects>* function. You will not be directly making calls to this function unless you want to implement your own responseHandler which improves
-    the functionality of this function.
+    the functionality of this function. 
 
     Parameters:
         php_script_response - The response string received from AJAX call.
 
     Returns:
         This function does not return any value. It stores the results in the *window.sessionStorage* object.
-
+        
     Remarks:
         Upon success the *errorStatus* field in *window.sessionStorage* is set to *success* and the following are also set:
 
-        - *userProjects*: This is a JSON object that contains an array populated with list of all the projects. The values are stored in an array called DATA. For each project the following fields exist:
-            - ID
-            - PRJ_NAME.
-
+        - *userProjects*: This is a JSON object that contains an array populated with list of all the projects. The values are stored in an array called DATA. For each project the following fields exist: 
+            - ID 
+            - PRJ_NAME. 
+            
         Note that the field names are ALL CAPS. See the example below on how to use the data stored in sessionStorage:
 
         --- Code
@@ -566,7 +566,7 @@ function handleGetUserFilesResponse(php_script_response) {
         for (i=0; i<prjsObj.DATA.length; i++)
             alert( prjsObj.DATA[i].ID + ": " + prjsObj.DATA[i].PRJ_NAME);
         ---
-
+                
         If the call fails or the response is not parsable the *errorStatus* field in *window.sessionStorage* is set to *fail*.
 
     See Also:
@@ -584,16 +584,16 @@ function handleGetUserProjectsResponse(php_script_response) {
 }
 
 /*  Function: handleSelectUserResponse
-
+   
     Handles the response from the AJAX call to the *<selectUser>* function. You will not be directly making calls to this function unless you want to implement your own responseHandler which improves
-    the functionality of this function.
+    the functionality of this function. 
 
     Parameters:
         php_script_response - The response string received from AJAX call.
 
     Returns:
         This function does not return any value. It stores the results in the *window.sessionStorage* object.
-
+        
     Remarks:
         Upon success the *errorStatus* field in *window.sessionStorage* is set to *success* and the following are also set:
 
@@ -601,7 +601,7 @@ function handleGetUserProjectsResponse(php_script_response) {
         - *username*: string, the username
         - *pilotsite*: int, ID of the pilot site see <addUser>
         - *isGroup*: [reserved]
-
+                
         If the call fails or the response is not parsable the *errorStatus* field in *window.sessionStorage* is set to *fail* and the following are also set:
 
         - *userId*: this will be set to -1
@@ -631,7 +631,7 @@ function handleSelectUserResponse(php_script_response) {
 function ping(handler){
     var formData = new FormData();
     formData.append("func", "ping");
-
+    
     makeAjaxCall(formData, handler);
 }
 
@@ -650,9 +650,6 @@ function makeAjaxCall(formData, handler) {
         //    $('#result').append(php_script_response + "<br/>");
         //}
         success: function (php_script_response) {
-						console.clear();
-						console.log('ajax:');
-						console.log(php_script_response);
             handler(php_script_response);
         }
     });

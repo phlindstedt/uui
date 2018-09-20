@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" class="h-100">
 <head>
-	
+
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
 	<title>Welcome to eCraft2Learn</title>
-	
+
 	<script src="libraries/js/jquery-3.2.1.min.js"></script>
-	
+
 	<link rel="stylesheet" href="libraries/css/bootstrap.min.css">
 <!-- 	https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7 -->
-    <script src="libraries/js/bootstrap.min.js"></script>  
+    <script src="libraries/js/bootstrap.min.js"></script>
 
 
     <!--<link href="libraries/css/metro.css" rel="stylesheet">
@@ -36,7 +36,7 @@
 		$('.project.bg-darkCobalt').removeClass('bg-darkCobalt'); //Make sure no visual indication of a project is selected
 		var userId = window.sessionStorage.getItem("userId")
 		window.sessionStorage.setItem("currentProjectId", -userId); //set users default project id (none) to negative userid.
-		
+
 		window.sessionStorage.removeItem("projectFiles"); //Empty sessionstorage project files
 		$('#activeProj').text('none');
 		//For mobile devices, hide the bottom charm to prevent it randomly poping up while scrolling
@@ -49,7 +49,7 @@
 			return;
 		if($('#bottomCharm button').length == 0)
 			$('#bottomCharm').hide();
-		else 
+		else
 			$('#bottomCharm').show();
 	});
     if (navigator.onLine) {
@@ -62,23 +62,28 @@
     	                        function () {
 									Raven.config('https://7780e314f7d64cc88db0fab885c9ca9b@sentry.io/305194',
 											     {whitelistUrls: [/ecraft2learn\.github\.io/]})
-										 .install();	                        	
+										 .install();
     	                        });
-    }  
+    }
     </script>
 
     <link rel="icon" type="image/png" href="images/eCraft2Learn-Favicon.png" />
-	
-		
+
+
 	<!-- This links to the css file that we use for coloring of the tiles. The themes are stored in the "themes" folder. Change this to see other themes-->
 	<link rel="stylesheet" type="text/css" href="themes/theme-3.css" />
 	<link rel="stylesheet" type="text/css" href="extra-btn.css" />
+
+	<!-- LNU Task List styling and script -->
+	<link rel="stylesheet" type="text/css" href="lnu/tasklist/css/tasklist.css" />
+	<script src="lnu/tasklist/js/tasklist.js"></script>
+	<script src="lnu/tasklist/js/api-calls.js"></script>
 	
 	<script src="js/window-management.js"></script>
 	<script src="js/helper-functions.js"></script>
 
 	<script src="js/file_manager.js"></script>
-	
+
 
 
 	<!--LNU CODE START-->
@@ -86,6 +91,15 @@
 	<!--LNU CODE END-->
 
 	<style>
+		.window.draggable{
+			z-index: 1081 !important;
+		}
+		.window.active-win {
+			z-index: 1080 !important;
+		}
+		.window:not(.active-win):not(.draggable) {
+			z-index: 1079 !important;
+		}
 		.bg-darkBlue {
 			background-color: #16499a !important;
 		}
@@ -192,20 +206,20 @@
 		.text-extra2-small {
 			font-weight: 400;
 			font-size: .50rem;
-		}	
+		}
 		.text-extra-small {
 			font-weight: 400;
 			font-size: .60rem;
-		}	
+		}
 		.v-menu {
 			background-color: transparent;
 			color: white;
 		}
-	
+
 		.dropdown-toggle::before {
 			border-color: #fff !important;
 		}
-		
+
         .tile-area-controls {
             position: fixed;
             right: 40px;
@@ -226,7 +240,7 @@
         #charmSettings .button {
             margin: 5px;
         }
-		
+
 		@media all and (min-width: 420px) {
 			.tiles-group {
 				margin-left: 40px;
@@ -234,7 +248,7 @@
 			.tile-area {
 				overflow-x: scroll;
 			}
-			
+
 			.button.large {
 				font-size: 1.25rem;
 			}
@@ -258,11 +272,11 @@
 			.tiles-group {
 				margin-bottom: 40px;
 			}
-			
+
 			.small-text-mobile {
 				font-size: 0.65rem;
 			}
-			
+
 			.button.large {
 				font-size: 0.65rem;
 			}
@@ -280,7 +294,7 @@
             .tile-area-controls {
                 display: none;
             }
-			
+
 			.large-text {
 				font-size: 0.8rem !important;
 			}
@@ -288,7 +302,7 @@
 				font-size: 0.8rem;
 			}
         }
-		
+
 		.login-form {
 			width: 30rem;
 			height: 20rem;
@@ -304,10 +318,10 @@
 			margin: auto;
 		}
     </style>
-	
+
 	<script>
 	params={};location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi,function(s,k,v){params[k]=v})
-	
+
 	$(function(){
             //$.StartScreen();
 
@@ -330,10 +344,10 @@
                 left: 0
             });
         });
-		
+
 	$(function(){
 		//if(params['username']!="" && params['pilotsite']!="" && params['username']!=undefined && params['pilotsite']!=undefined){
-		if ( window.sessionStorage.getItem("username")!=undefined 
+		if ( window.sessionStorage.getItem("username")!=undefined
 		  		&& window.sessionStorage.getItem("pilotsite")!=undefined
 		  		&& window.sessionStorage.getItem("userId")!=undefined
 		  		&& window.sessionStorage.getItem("userId")!=-1)
@@ -386,7 +400,7 @@
 		}
 	});
 	</script>
-	
+
 	<script>
 		//Listener for eCraft Idea, disables scrolling while painting (Mostly needed for mobile devices)
 		window.addEventListener('message', function (e) {
@@ -401,8 +415,8 @@
 				$('body').css('overscroll-behavior', 'auto');
 			}
 		});
-		
-		//Hide/show apps on mobile devices that aren't supported for mobiles. 
+
+		//Hide/show apps on mobile devices that aren't supported for mobiles.
 		$(document).on('click', '#hidden_apps', function(){
 			if($(this).is(':checked')) {
 				$('.no-mobile').each(function(){
@@ -457,7 +471,7 @@
 			}
 		});
 		$(document).on('click', '.btn-max', function(){
-			window.scrollTo($(this).position.x, 0); 
+			window.scrollTo($(this).position.x, 0);
 			maximizeWindow($(this).closest('.window').find('.iframeWindow'));
 			//$(this).closest('.window').find('.iframeWindow').css('height', '100%');
 		});
@@ -475,7 +489,7 @@
 				xhttp.send();
 				xhttp.onreadystatechange = function() {
 					if (this.readyState == 4) {
-						if (this.status == 200) { 
+						if (this.status == 200) {
 							Metro.infobox.create(this.responseText, "", {
 								width: 600,
 								removeOnClose: true
@@ -486,7 +500,7 @@
 				}
 			}
 		}
-		
+
 		function helpClick(file, helpDialogId, event){
 			if (file) {
 				var username = window.sessionStorage.getItem("username");
@@ -498,10 +512,10 @@
 				xhttp.send();
 				xhttp.onreadystatechange = function() {
 					if (this.readyState == 4) {
-						if (this.status == 200) { 
+						if (this.status == 200) {
 							Metro.dialog.create({
-								title: "", 
-								content: this.responseText, 
+								title: "",
+								content: this.responseText,
 								width: "600",
 								removeOnClose: true,
 								actions: [
@@ -517,11 +531,11 @@
 										caption: "Cancle",
 										cls: "js-dialog-close"
 									}
-									
+
 								]
 							});
 						}
-						if (this.status == 404) { 
+						if (this.status == 404) {
 							Metro.notify.create(
 								'Page not found.',
 								'Alert',
@@ -534,10 +548,10 @@
 				}
 			}
 		}
-		
+
 		function tileClick(toolUrl, winTitle, event){
 			var analyticField;
-		
+
 			if(winTitle==undefined) {
 				analyticField = getAnalyticFieldName(toolUrl);
 				gotoTileDestination(toolUrl);
@@ -545,13 +559,13 @@
 			}
 			else{
 				analyticField = getAnalyticFieldName(toolUrl);
-				
+
 				//var url = toolUrl + '&username=' + params['username'] + '&sessionId=' + params['pilotsite'];
 				//console.log(url);
-				
+
 				//window.sessionStorage.setItem('username', params['username']);
 				//window.sessionStorage.setItem('pilotsite', params['pilotsite']);
-				
+
 				openIframeWindow(toolUrl, winTitle, event);
 
 			}
@@ -564,16 +578,16 @@
 
 
 		}
-		
+
 		function newProject(toolUrl, winTitle, event){
 			openIframeWindowP(toolUrl, winTitle, event);
 		}
-		
+
 		function showInOERWindow(event, addr){
 			//allWin = $("div").find('[class], bg-red');
 			allWin = $("*").find("div[data-role*='dialog']");
-			oerWin = $("#oerWin");	
-			
+			oerWin = $("#oerWin");
+
 			var oerMainFolder = "help/oer/";
 			var eventNode = $(event.srcElement);
 			var oerText = $(eventNode).html();
@@ -591,7 +605,7 @@
 				link.setAttribute("type", "text/css");
 				link.setAttribute("href", "../../libraries/css/metro.css");
 				otherhead.appendChild(link);
-				
+
 				alert(otherhead.innerHTML);
 				curHead = document.getElementByTagName("head");
 				//iframe = $(dialog).getElementById("iframeWindow");
@@ -604,7 +618,7 @@
 			else{
 				var iframe = $(oerWin).find("[id|='iframeWindow']")[0];
 				$(iframe).attr('src', oerAddress);
-				
+
 				var oerMinimizedBtn = $("#oerWin_btn");
 				if($(oerMinimizedBtn).attr('id') == 'oerWin_btn'){
 					unminimizeWindowFromJS(oerMinimizedBtn);
@@ -612,7 +626,7 @@
 			}
 		}
 	</script>
-	
+
 </head>
 
 <body class="bg-dark fg-white h-100">
@@ -644,11 +658,11 @@
 		}
 	}
 	</script>
-	
+
 	<div class="container-fluid start-screen no-overflow mb-20">
 		<div class="grid">
 			<div class="row">
-				<div class="cell-8"> 
+				<div class="cell-8">
 				<!--pt-4 pl-4 pr-4 mb-0 -->
 					<div class="pt-4 pl-4 pr-4 mb-0 img-container">
 							<img id="eCraftLogo" style="min-width:120px;width:auto;" src="images/eCraft2Learn-icon.png" />
@@ -724,7 +738,7 @@
 
 					</div>
 					<div id="userMenu" class="m-2 p-4 bg-darkGray" style="position:absolute; right:0; top:0; display:none; z-index:1;">
-						
+
 						<div style="display:flex; justify-content: left; align-items: center; font-size:20px;"> <span class="icon mif-users mif-2x fg-lightTeal"></span> <span class="no-margin text-heavy"></span>&nbsp;<script>document.write(window.sessionStorage.getItem('username'));</script></span></div><br/>
 						<div class="progress pull-right no-margin" data-role="progress" data-value="getUserProgress();" dataz-value="73" style="width:200px;"></div><br/><br/>
 						<div class="mobile-only">
@@ -743,7 +757,7 @@
 				</div>
 			</div>
 		</div>
-		<!-- 
+		<!--
 		When adding new app to the tile area, Make sure you edit these lines:
 		- infoClick('PATH TO THE HELP PAGE', 'TILE NAME', event); Path to the help page (?)
 		- tileClick(PATH TO THE APPLICATION, 'APPLICATION NAME', event); !!! There are 2 places in the code, make to edit both and make them the same. Replace 'APPLICATION NAME' with undefined to open the app in a new window/tab instead of integrated window.
@@ -769,7 +783,7 @@
 								</div>
 							</div>
 							<div data-role="tile" class="tile bg-ideation fg-white no-mobile" data-effect="hover-slide-up">
-								<span class="mif-bubbles badge-medium-top pr-4 bg-transparent" onclick="openFeedbackWindow('./lnu/commenting/index.html','Inspiratorium');"></span>
+								<span class="mif-bubble badge-medium-top pr-4 bg-transparent" onclick="openFeedbackWindow('./lnu/commenting/index.html','Inspiratorium',event);"></span>
 								<span class="mif-question badge-medium-top m-0 bg-transparent" onclick="infoClick('./about/inspiratorium-help.html', '#inspiratoriumDialog');"></span>
 								<div class="slide-front" onclick="tileClick('http://ecraft.zsi.at/', undefined, event);">
 									<img class="icon" src="./images/inspiratorium_logo.png">
@@ -784,7 +798,7 @@
 						<div class="tiles-grid tiles-group size-2 fg-white  mb-15" data-group-title="Plan">
 							<!--UEF Ideation-->
 							<div data-role="tile" class="tile bg-plan fg-white" data-effect="hover-slide-up">
-								<span class="mif-bubbles badge-medium-top pr-4 bg-transparent" onclick="openFeedbackWindow('./lnu/commenting/index.html','eCraft Plan');"></span>
+								<span class="mif-bubble badge-medium-top pr-4 bg-transparent" onclick="openFeedbackWindow('./lnu/commenting/index.html','eCraft Plan',event);"></span>
 								<span class="mif-question badge-medium-top m-0 bg-transparent" onclick="infoClick('./about/ecraft-idea-help.html', '#eCraftIdeaDialog');"></span>
 								<div class="slide-front" onclick="tileClick('./uef/ideation/index.html', 'eCraft Idea', event);">
 									<img class="icon" src="./images/google-drive-logo-flat.png">
@@ -804,10 +818,10 @@
 								<div class="slide-back text-small d-flex flex-justify-center flex-align-center p-3" onclick="tileClick('./uef/plan/index.html', 'eCraft Todo', event);">
 									Use this to plan tasks of the project
 								</div>
-							</div>							
+							</div>
 							<!-- Trello -->
 							<div data-role="tile" data-size="small" class="tile bg-plan fg-white no-mobile" data-effect="hover-slide-up">
-								<span class="mif-bubbles badge-medium-top pr-4 bg-transparent" onclick="openFeedbackWindow('./lnu/commenting/index.html','Trello);"></span>
+								<span class="mif-bubble badge-medium-top pr-4 bg-transparent" onclick="openFeedbackWindow('./lnu/commenting/index.html','Trello',event);"></span>
 								<span class="mif-question badge-small-top m-0 p-0 bg-transparent" onclick="infoClick('./about/trello-help.html', '#TrelloDialog');"></span>
 								<div class="slide-front" onclick="tileClick('https://trello.com/', undefined, event);">
 									<img class="icon" width="50%" src="./images/trello-logo.png">
@@ -821,7 +835,7 @@
 						<div class="tiles-grid tiles-group size-2 fg-white  mb-15" data-group-title="Create">
 							<!-- TinkerCad 3D Design -->
 							<div data-role="tile" class="tile bg-create fg-white no-mobile" data-effect="hover-slide-up">
-								<span class="mif-bubbles badge-medium-top pr-4 bg-transparent" onclick="openFeedbackWindow('./lnu/commenting/index.html','TinkerCad 3D Design');"></span>
+								<span class="mif-bubble badge-medium-top pr-4 bg-transparent" onclick="openFeedbackWindow('./lnu/commenting/index.html','TinkerCad 3D Design',event);"></span>
 								<span class="mif-question badge-medium-top m-0 bg-transparent" onclick="infoClick('./about/tinkercad-3d-design-help.html', '#TinkerCad3DDesignDialog');"></span>
 								<div class="slide-front" onclick="tileClick('https://www.tinkercad.com/#/?type=tinkercad&collection=designs', 'TinkerCad 3D Design', event);">
 									<img class="icon" src="./images/tinkercad-logo.png">
@@ -833,7 +847,7 @@
 							</div>
 							<!-- TinkerCad Circuit Design -->
 							<div data-role="tile" class="tile bg-create fg-white no-mobile" data-effect="hover-slide-up">
-								<span class="mif-bubbles badge-medium-top pr-4 bg-transparent" onclick="openFeedbackWindow('./lnu/commenting/index.html','TinkerCad Circuits');"></span>
+								<span class="mif-bubble badge-medium-top pr-4 bg-transparent" onclick="openFeedbackWindow('./lnu/commenting/index.html','TinkerCad Circuits',event);"></span>
 								<span class="mif-question badge-medium-top m-0 bg-transparent" onclick="infoClick('./about/tinkercad-circuit-design-help.html', '#TinkerCadCircuitDesignDialog');"></span>
 								<div class="slide-front" onclick="tileClick('https://www.tinkercad.com/#/dashboard?type=circuits&collection=designs', 'TinkerCad Circuit Design', event);">
 									<img class="icon" src="./images/tinkercad-logo.png">
@@ -845,7 +859,7 @@
 							</div>
 							<!-- Beetle Blocks -->
 							<div data-role="tile" class="tile bg-create fg-white no-mobile" data-effect="hover-slide-up">
-								<span class="mif-bubbles badge-medium-top pr-4 bg-transparent" onclick="openFeedbackWindow('./lnu/commenting/index.html','Beetle Blocks');"></span>
+								<span class="mif-bubble badge-medium-top pr-4 bg-transparent" onclick="openFeedbackWindow('./lnu/commenting/index.html','Beetle Blocks',event);"></span>
 								<span class="mif-question badge-medium-top m-0 bg-transparent" onclick="infoClick('./about/beetleblocks-help.html', '#BeetleBloxDialog');"></span>
 								<div class="slide-front" onclick="tileClick('http://beetleblocks.com/run/', undefined, event);">
 									<img class="icon" src="./images/beetle-blocks.png">
@@ -861,14 +875,14 @@
 									<div class="slide-front" onclick="tileClick('./uef/slice/index.html', 'Slicer', event);">
 											<img class="icon" src="./images/slice.png">
 											<span class="branding-bar">3D slicing</span>
-									</div>       
+									</div>
 									<div class="slide-back text-small d-flex flex-justify-center flex-align-center p-3" onclick="tileClick('./uef/slice/index.html', 'Slicer', event);">
 											Slice 3D modeles for 3D printer
-									</div>       
-							</div>	
+									</div>
+							</div>
 							<!-- 3D Slah -->
 							<div data-role="tile" data-size="small" class="tile bg-create fg-white no-mobile" data-effect="hover-slide-up">
-								<span class="mif-bubbles badge-medium-top pr-4 bg-transparent" onclick="openFeedbackWindow('./lnu/commenting/index.html','3D Slash');"></span>
+								<span class="mif-bubble badge-medium-top pr-4 bg-transparent" onclick="openFeedbackWindow('./lnu/commenting/index.html','3D Slash',event);"></span>
 								<span class="mif-question badge-small-top m-0 p-0 bg-transparent" onclick="infoClick('./about/3d-slash-help.html', '#3DSlashDialog');"></span>
 								<div class="slide-front" onclick="tileClick('https://www.3dslash.net/slash.php', '3D Slash', event);">
 									<img class="icon" width="50%" src="./images/3d-slash-logo.png">
@@ -879,7 +893,7 @@
 							</div>
 							<!-- Cura -->
 							<div data-role="tile" data-size="small" class="tile bg-create fg-white no-mobile" data-effect="hover-slide-up">
-								<span class="mif-bubbles badge-medium-top pr-4 bg-transparent" onclick="openFeedbackWindow('./lnu/commenting/index.html','Cura');"></span>
+								<span class="mif-bubble badge-medium-top pr-4 bg-transparent" onclick="openFeedbackWindow('./lnu/commenting/index.html','Cura',event);"></span>
 								<span class="mif-question badge-small-top m-0 p-0 bg-transparent" onclick="infoClick('./about/cura-help.html', '#CuraDialog');"></span>
 								<div class="slide-front" onclick="infoClick('./about/cura-help.html', '#CuraDialog');">
 									<img class="icon" width="50%" src="./images/cura-logo.png">
@@ -893,7 +907,7 @@
 						<div class="tiles-grid tiles-group size-2 fg-white  mb-15" data-group-title="Program">
 							<!-- SNAP -->
 							<div data-role="tile" class="tile bg-ardu-pi fg-white no-mobile" data-effect="hover-slide-up">
-								<span class="mif-bubbles badge-medium-top pr-4 bg-transparent" onclick="openFeedbackWindow('./lnu/commenting/index.html','Snap!');"></span>
+								<span class="mif-bubble badge-medium-top pr-4 bg-transparent" onclick="openFeedbackWindow('./lnu/commenting/index.html','Snap!',event);"></span>
 								<span class="mif-question badge-medium-top m-0 bg-transparent" onclick="infoClick('./about/snap-help.html', '#SnapDialog');"></span>
 								<div class="slide-front" onclick="tileClick('./snap/snap.html','Snap!', event);">
 									<img class="icon" src="./images/snap_logo-110.png">
@@ -905,7 +919,7 @@
 							</div>
 							<!-- SNAP4ARDUINO -->
 							<div data-role="tile" class="tile bg-arduino fg-white no-mobile" data-effect="hover-slide-up">
-								<span class="mif-bubbles badge-medium-top pr-4 bg-transparent" onclick="openFeedbackWindow('./lnu/commenting/index.html','Snap4Arduino');"></span>
+								<span class="mif-bubble badge-medium-top pr-4 bg-transparent" onclick="openFeedbackWindow('./lnu/commenting/index.html','Snap4Arduino',event);"></span>
 								<span class="mif-question badge-medium-top m-0 bg-transparent" onclick="infoClick('./about/snap4arduino-help.html', '#Snap4ArduinoDialog');"></span>
 								<div class="slide-front" onclick="tileClick('./snap4arduino/index.html','Snap4Arduino', event);">
 									<img class="icon" src="./images/snap_logo-110.png">
@@ -917,7 +931,7 @@
 							</div>
 							<!-- ARDUBLOCK -->
 							<div data-role="tile" data-size="small" class="tile bg-arduino fg-white no-mobile" data-effect="hover-slide-up">
-								<span class="mif-bubbles badge-medium-top pr-4 bg-transparent" onclick="openFeedbackWindow('./lnu/commenting/index.html','Ardublock');"></span>
+								<span class="mif-bubble badge-medium-top pr-4 bg-transparent" onclick="openFeedbackWindow('./lnu/commenting/index.html','Ardublock',event);"></span>
 								<span class="mif-question badge-small-top m-0 p-0 bg-transparent" onclick="infoClick('./about/ardublock-help.html', '#ArdublockDialog');"></span>
 								<div class="slide-front" onclick="infoClick('./about/cura-help.html', '#ArdublockDialog');">
 									<span class="tile-image icon"><span class='notranslate' translate='no'>A</span></span>
@@ -928,7 +942,7 @@
 							</div>
 							<!-- SCRATCH 4 RPi -->
 							<div data-role="tile" data-size="small" class="tile bg-raspberry fg-white no-mobile" data-effect="hover-slide-up">
-								<span class="mif-bubbles badge-medium-top pr-4 bg-transparent" onclick="openFeedbackWindow('./lnu/commenting/index.html','Scratch for RPi');"></span>
+								<span class="mif-bubble badge-medium-top pr-4 bg-transparent" onclick="openFeedbackWindow('./lnu/commenting/index.html','Scratch for RPi',event);"></span>
 								<span class="mif-question badge-small-top m-0 p-0 bg-transparent" onclick="infoClick('./about/scratch-4-raspberry-pi.html', '#Scratch4RPiDialog');"></span>
 								<div class="slide-front" onclick="tileClick('https://scratch.mit.edu/', undefined, event);">
 									<img class="icon" src="./images/scratch-logo-small.png">
@@ -939,7 +953,7 @@
 							</div>
 							<!-- SCRATCH 4 ARDUINO -->
 							<div data-role="tile" data-size="small" class="tile bg-arduino fg-white no-mobile" data-effect="hover-slide-up">
-								<span class="mif-bubbles badge-medium-top pr-4 bg-transparent" onclick="openFeedbackWindow('./lnu/commenting/index.html','Scratch for Arduino');"></span>
+								<span class="mif-bubble badge-medium-top pr-4 bg-transparent" onclick="openFeedbackWindow('./lnu/commenting/index.html','Scratch for Arduino',event);"></span>
 								<span class="mif-question badge-small-top m-0 p-0 bg-transparent" onclick="infoClick('./about/scratch-4-arduino.html', '#Scratch4ArduDialog');"></span>
 								<div class="slide-front" onclick="tileClick('http://s4a.cat/', undefined, event);">
 									<img class="icon" src="./images/scratch-logo-small.png">
@@ -950,7 +964,7 @@
 							</div>
 							<!-- APP INVENTOR -->
 							<div data-role="tile" data-size="small" class="tile bg-ardu-pi fg-white no-mobile" data-effect="hover-slide-up">
-								<span class="mif-bubbles badge-medium-top pr-4 bg-transparent" onclick="openFeedbackWindow('./lnu/commenting/index.html','App Inventor');"></span>
+								<span class="mif-bubble badge-medium-top pr-4 bg-transparent" onclick="openFeedbackWindow('./lnu/commenting/index.html','App Inventor',event);"></span>
 								<span class="mif-question badge-small-top m-0 p-0 bg-transparent" onclick="infoClick('./about/app-inventor-help.html', '#AppInventorDialog');"></span>
 								<div class="slide-front" onclick="tileClick('http://ai2.appinventor.mit.edu/', undefined, event);">
 									<img class="icon" src="./images/app-inventor-allwhite.png">
@@ -961,7 +975,7 @@
 							</div>
 							<!-- POCKET CODE -->
 							<div data-role="tile" data-size="small" class="tile bg-ardu-pi fg-white no-mobile" data-effect="hover-slide-up">
-								<span class="mif-bubbles badge-medium-top pr-4 bg-transparent" onclick="openFeedbackWindow('./lnu/commenting/index.html','Pocket Code');"></span>
+								<span class="mif-bubble badge-medium-top pr-4 bg-transparent" onclick="openFeedbackWindow('./lnu/commenting/index.html','Pocket Code',event);"></span>
 								<span class="mif-question badge-small-top m-0 p-0 bg-transparent" onclick="infoClick('./about/pocket-code-help.html', '#PocketCodeDialog');"></span>
 								<div class="slide-front" onclick="tileClick('https://www.catrobat.org/intro/', undefined, event);">
 									<img class="icon" src="./images/pocket-code-allwhite.png">
@@ -972,7 +986,7 @@
 							</div>
 							<!-- NETSBLOX -->
 							<div data-role="tile" data-size="small" class="tile bg-ardu-pi fg-white no-mobile" data-effect="hover-slide-up">
-								<span class="mif-bubbles badge-medium-top pr-4 bg-transparent" onclick="openFeedbackWindow('./lnu/commenting/index.html','NetsBlox');"></span>
+								<span class="mif-bubble badge-medium-top pr-4 bg-transparent" onclick="openFeedbackWindow('./lnu/commenting/index.html','NetsBlox',event);"></span>
 								<span class="mif-question badge-small-top m-0 p-0 bg-transparent" onclick="infoClick('./about/netsblox-help.html', '#NetsBloxDialog');"></span>
 								<div class="slide-front" onclick="tileClick('https://editor.netsblox.org/','NetsBlox', event);">
 									<img class="icon" src="./images/netsblox.png">
@@ -983,7 +997,7 @@
 							</div>
 							<!-- ARDUINO IDE -->
 							<div data-role="tile" data-size="small" class="tile bg-arduino fg-white no-mobile" data-effect="hover-slide-up">
-								<span class="mif-bubbles badge-medium-top pr-4 bg-transparent" onclick="openFeedbackWindow('./lnu/commenting/index.html','Arduino IDE');"></span>
+								<span class="mif-bubble badge-medium-top pr-4 bg-transparent" onclick="openFeedbackWindow('./lnu/commenting/index.html','Arduino IDE',event);"></span>
 								<span class="mif-question badge-small-top m-0 p-0 bg-transparent" onclick="infoClick('./about/arduino-ide-help.html', '#ArduinoIdeDialog');"></span>
 								<div class="slide-front" onclick="tileClick('https://create.arduino.cc/editor', undefined, event);">
 									<img class="icon" src="./images/arduino-ide.png">
@@ -1007,7 +1021,7 @@
 						<div class="tiles-grid tiles-group size-1 fg-white  mb-15" data-group-title="Share">
 							<!--Thingiverse-->
 							<div data-role="tile" class="tile bg-share fg-white no-mobile" data-effect="hover-slide-up">
-								<span class="mif-bubbles badge-medium-top pr-4 bg-transparent" onclick="openFeedbackWindow('./lnu/commenting/index.html','Thingiverse');"></span>
+								<span class="mif-bubble badge-medium-top pr-4 bg-transparent" onclick="openFeedbackWindow('./lnu/commenting/index.html','Thingiverse',event);"></span>
 								<span class="mif-question badge-medium-top m-0 bg-transparent" onclick="infoClick('./about/thingiverse-help.html', '#ThingiverseDialog');"></span>
 								<div class="slide-front" onclick="tileClick('https://www.thingiverse.com/','Thingiverse', event);">
 									<img class="icon" src="./images/thingiverse-logo.png">
@@ -1035,8 +1049,10 @@
 			<div class="row">
 				<div class="cell">
 					<div class="tiles-area pt-5 pl-10 pr-10" id="divProjects" stylez="display:none;">
-						<div class="tiles-grid tiles-group size-1 fg-white  mb-15" data-group-title="UUI Tools">
+						<div class="tiles-grid tiles-group size-5 fg-white  mb-15" data-group-title="UUI Tools">
 							<!--<span class="tile-group-title">UUI Tools</span><br>-->
+
+							<!-- Project tile -->
 							<div id="#spanPrj_0" class="tile-large bg-darkBlue fg-white p-5 project-tile">
 								<div class="grid">
 									<div class="row">
@@ -1053,17 +1069,17 @@
 										</div>
 									</div>
 									<div class="row">
-										<div class="cell"id="tileProjects">	
+										<div class="cell"id="tileProjects">
 											<script>
 												var userId = window.sessionStorage.getItem("userId");
 												if(userId!=undefined && userId!=-1){
 													getUserProjects(userId, handleGetProjectsResponse);
 													$('.project-tile').data('PROJECTID',-userId);
 												}
-								
+
 												function handleGetProjectsResponse(phpResponse){
 													var jsonData = JSON.parse(phpResponse);
-													
+
 													for(i=0; i<jsonData.DATA.length && i<8;i++){
 														var prjId = jsonData.DATA[i].ID;
 														var spanLink = $("<div>").css("width","100%").css("border", "0px").addClass("project m-0 p-0").attr("id", "spanPrj_" + prjId);
@@ -1087,7 +1103,7 @@
 													window.sessionStorage.setItem("currentProjectId",prjId);
 													if(prjId > 0)
 														$('#activeProj').text(clickedLink.text());
-													else 
+													else
 														$('#activeProj').text('none');
 													var newSelectedDiv = $("#spanPrj_" + prjId);
 													if(curSelectedDiv!=null)
@@ -1103,14 +1119,40 @@
 										</div>
 									</div>
 								</div>
-							</div>
+							</div> <!-- End of project tile -->
+
+							<!-- Task List tile -->
+							<div id="tasklist" data-role="tile" data-size="large" class="bg-darkBlue fg-white p-5 task-list-tile">
+								
+								<div class="grid">
+									<div class="row">
+										<div class="cell">
+											<p class="pb-5">Task List</p>
+										</div>
+										<div class="cell">
+											<div id="tasklist-refresh">
+												<span class="mif-loop2 float-right" data-role="hint" data-hint-text="Refresh the task list" data-hint-position="bottom" data-cls-hint="bg-cyan fg-white drop-shadow"></span>
+											</div>
+											
+										</div>
+									</div>
+									<div class="row" id="accordionRow">
+										<div class="cell" id="tasklist-empty-state">
+											<img src="lnu/tasklist/img/no-tasks.png">
+											<h4>No tasks</h4>
+											<p>There are currently no tasks available.</p>
+										</div>
+									</div>
+								</div>
+							</div> <!-- End of Task List tile -->
+
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>		
 	</div><!--End of Main Content Container-->
-	
+
 	<!--Login Box and Hidden Data-->
 	<form  id="loginForm" class="login-form p-3 mx-auto border db-default win-shadow" style="z-index:2; height: 450px;" data-overlay="true">		
         <!--<form>-->
@@ -1140,11 +1182,11 @@
 				<!--<button type="button" class="button link">Cancel</button>-->
 				<script>
 					function HandleUserLogin(){
-						
+
 						var sessionId = $('#manual-session').val();
 
 						if (sessionId.trim() !== '') {
-						
+
 							$.ajax({
 
 								type: 'GET',
@@ -1155,7 +1197,7 @@
 										selectUser($('#username').val(), sessionId, HandleLoginCallback);
 									else
 										alert('No session with session id ' + sessionId + ' exists.');
-								
+
 
 								},
 								error: (error) => {
@@ -1165,9 +1207,9 @@
 								}
 
 							});
-	
+
 							selectUser($('#username').val(), sessionId, HandleLoginCallback);
-						
+
 						} else
 							selectUser($("#username").val(), $("#pilotsite").val(), HandleLoginCallback);
 					}
@@ -1274,7 +1316,7 @@
 					<li class="divider"></li>
 				</ul>
 			</li>
-			
+
 			<!-- 3D Printing -->
 			<li><a href="#" class="dropdown-toggle">
 					<span class="icon mif-rocket mif-ani-hover-spanner"></span>
@@ -1295,7 +1337,7 @@
 					<li class="divider"></li>
 				</ul>
 			</li>
-				
+
 			<!-- A.I. Section -->
 			<li><a href="#" class="dropdown-toggle">
 					<span class="icon mif-squirrel mif-ani-hover-spanner"></span>
@@ -1324,7 +1366,7 @@
 					<li class="divider"></li>
 				</ul>
 			</li>
-			
+
 			<!-- Troubleshooting Section -->
 			<li><a href="#" class="dropdown-toggle">
 					<span class="icon mif-wrench mif-ani-hover-spanner"></span>
@@ -1345,7 +1387,7 @@
 				</ul>
 			</li>
 
-			
+
 			<!-- Worksheets Section -->
 			<li><a href="#" class="dropdown-toggle">
 					<span class="icon mif-stack mif-ani-hover-spanner"></span>
@@ -1375,9 +1417,9 @@
 				</ul>
 			</li>
 		</ul>
-		
+
 		<br/>
-		
+
 		<div class="input-control text m-2" style="width: 250px; right:0;">
 			<input class="fg-white" type="text" data-role="search" data-clear-button="false" id="oerSearch" placeholder="Search..." onkeyup="searchOER();" data-on-search-button-click="searchOER();">
 			<!--<button class="button" onclick="searchOER();"><span class="mif-search"></span></button>-->
@@ -1394,7 +1436,7 @@
 						return;
 					$.each(elemsList, function(i, liElem){
 						aElem = $(liElem).children("a");
-					
+
 						if($(aElem).attr('data-role')=="searchable"){
 							aElem.addClass('fg-darkBlue');
 							aText = $(aElem).text();
@@ -1404,8 +1446,8 @@
 						}
 					});
 
-					
-				}	
+
+				}
 			</script>
 		</div>
 
@@ -1416,7 +1458,7 @@
 
 
 
-	
+
 	<!-- The Task Bar at the bottom of the page-->
 	<div id="charmCatcher" style="height:20px; position:fixed; bottom:0%; width:100%; opacity:0; background-color:red; z-index:0;" onmouseenter="Metro.charms.open('#bottomCharm');"></div>
 	<div id="bottomCharm" data-role="charms" data-position="bottom"  class="bg-darkBlue"><span>&nbsp;</span></div>
@@ -1443,25 +1485,25 @@
 					url: 'https://cs.uef.fi/~tapanit/ecraft2learn/api/pilot_2/get_student_messages.php',
 					data: 'user=' + user + '&sessionId=' + sessionId + '&lastId=' + lastId,
 					success: (data) => {
-						
+
 						try {
 
 							var messages = JSON.parse(data);
-						
+
 						} catch (e) {
-						
+
 							return;
-							
+
 						}
-							
+
 						if (Array.isArray(messages)) {
 
 							var id = lastId;
-							
+
 							for (let i = 0; i < messages.length; i++) {
-							
+
 								id = messages[i].id;
-								
+
 								 Metro.dialog.create({
         								title: "Message from your teacher.",
         								content: "<div>" + messages[i].message + "</div>",
@@ -1470,12 +1512,12 @@
         								clsContent: "fg-white",
         								clsDefaultAction: "alert"
     								});
-								
-											    
+
+
 							}
-							
+
 							id++;
-							
+
 							window.localStorage.setItem('lastMessageId', id);
 
 						}
@@ -1490,7 +1532,7 @@
 		}, 2000);
 
 	})();
-		
+
 	</script>
-		
+
 </body>
