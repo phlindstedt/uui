@@ -253,7 +253,7 @@ data = data || {};
 			break;
 		}
 	}
-	//return;
+	return;
 
     $.ajax({
 
