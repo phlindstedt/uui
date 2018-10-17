@@ -207,6 +207,7 @@ function getCloudFiles(toolId){
 	return html;
 }
 function saveDataToCloud(data, name, toolName) {
+	console.log(data);
 	var toolId = toolNameToId(toolName);
 	var projId = (window.sessionStorage.getItem("currentProjectId") || -window.sessionStorage.getItem('username'));
 	var formData = new FormData();
