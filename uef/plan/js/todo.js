@@ -58,9 +58,9 @@ data = data || {};
                     css_id = element.attr("id"),
                     id = css_id.replace(options.taskId, ""),
                     object = data[id];
-
+				console.log('elem: ' + todo.element);
                 removeElement(object);
-				console.log('elem: ' + element);	
+				console.log('elem: ' + todo.element);	
                 delete data[id];
 
                 $("#" + defaults.deleteDiv).hide();
