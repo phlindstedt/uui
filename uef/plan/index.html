@@ -70,6 +70,7 @@
 	    <script type="text/javascript">
 			$(document).on('click', '#save', function(){
 				var elem = JSON.stringify(todo.elements);
+				todo.save();
 				//saveDataToCloud(elem, 'eCraft Todo', 'eCraft Todo');
 			});
 	    	$( "#datepicker" ).datepicker();
