@@ -62,7 +62,7 @@ data = data || {};
                 removeElement(object);
 				console.log('elem: ' + todo.element);	
                 delete data[id];
-				console.log('data' + data[id]);
+				console.log('data' + data.length);
                 $("#" + defaults.deleteDiv).hide();
             }
         })
@@ -135,7 +135,7 @@ data = data || {};
 		if (todo.elements[i].id === params.id) {
 			console.log('deleting: ' + todo.elements[i].id);
 			todo.elements.splice(i, 1);
-			console.log('todo: ' + todo.elements[i].id);
+			console.log('todo: ' + todo.elements.length);
 			break;
 		}
 		
