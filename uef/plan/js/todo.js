@@ -60,7 +60,7 @@ data = data || {};
                     object = data[id];
 
                 removeElement(object);
-
+				console.log('elem: ' + todo.element);	
                 delete data[id];
 
                 $("#" + defaults.deleteDiv).hide();
@@ -138,7 +138,6 @@ data = data || {};
 		}
 		
 	}
-	console.log('elem: ' + todo.element);	
 
     };
 
