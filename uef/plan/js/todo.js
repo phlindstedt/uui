@@ -60,7 +60,7 @@ data = data || {};
                     object = data[id];
 
                 removeElement(object);
-				console.log('elem: ' + todo.element);	
+				console.log('elem: ' + element);	
                 delete data[id];
 
                 $("#" + defaults.deleteDiv).hide();
