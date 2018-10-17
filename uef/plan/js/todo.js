@@ -136,9 +136,9 @@ data = data || {};
 			todo.elements.splice(i, 1);
 			break;
 		}
-		console.log(todo.element);
-	}
 		
+	}
+	console.log('elem: ' + todo.element);	
 
     };
 
