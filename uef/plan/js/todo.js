@@ -129,7 +129,7 @@ data = data || {};
     var removeElement = function (params) {
 
         $("#" + defaults.taskId + params.id).remove();
-
+	console.log('Delete: ' + params);
 	for (let i = todo.elements.length - 1; i >= 0; i--) {
 		console.log(todo.elements[i].id + ' === ' + params.id);
 		if (todo.elements[i].id === params.id) {
