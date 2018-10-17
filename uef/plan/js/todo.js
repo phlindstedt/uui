@@ -60,9 +60,6 @@ data = data || {};
                     object = data[id];
 
                 removeElement(object);
-				
-				console.log(data[id]);
-				console.log(todo.element[id]);
 
                 delete data[id];
 
@@ -134,7 +131,6 @@ data = data || {};
         $("#" + defaults.taskId + params.id).remove();
 
 	for (let i = todo.elements.length - 1; i >= 0; i--)
-		console.log(todo.elements[i].id + ' === ' + params.id);
 		if (todo.elements[i].id === params.id) {
 			todo.elements.splice(i, 1);
 			break;
