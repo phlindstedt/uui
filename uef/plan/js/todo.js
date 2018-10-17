@@ -58,11 +58,11 @@ data = data || {};
                     css_id = element.attr("id"),
                     id = css_id.replace(options.taskId, ""),
                     object = data[id];
-				console.log('elem: ' + todo.element);
+
                 removeElement(object);
-				console.log('elem: ' + todo.element);	
+
                 delete data[id];
-				console.log('data' + data.length);
+
                 $("#" + defaults.deleteDiv).hide();
             }
         })
@@ -129,17 +129,12 @@ data = data || {};
     var removeElement = function (params) {
 
         $("#" + defaults.taskId + params.id).remove();
-		
-	for (let i = todo.elements.length - 1; i >= 0; i--) {
-		console.log(todo.elements[i].id + ' === ' + params.id);
+
+	for (let i = todo.elements.length - 1; i >= 0; i--)
 		if (todo.elements[i].id === params.id) {
-			console.log('deleting: ' + todo.elements[i].id);
 			todo.elements.splice(i, 1);
-			console.log('todo: ' + todo.elements.length);
 			break;
 		}
-		
-	}
 
     };
 
@@ -251,7 +246,7 @@ data = data || {};
 		if(arr.DATA[i].TOOLID == 20) {
 			var tasks = JSON.parse(arr.DATA[i]['FILE_PATH']);
 			for (let x = 0; x < tasks.length; x++)
-				todo.generateElement(tasks[x]);
+				data[tasks[x].id] = tasks[x];
 			break;
 		}
 	}
