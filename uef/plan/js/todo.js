@@ -60,6 +60,8 @@ data = data || {};
                     object = data[id];
 
                 removeElement(object);
+				
+				console.log(data[id]);
 
                 delete data[id];
 
